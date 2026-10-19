@@ -1,0 +1,8 @@
+{
+  // Cloudflare Workers static site: tools/export-public.js builds ./dist, then "npx wrangler deploy" publishes it.
+  "name": "pixelqg-site",
+  "compatibility_date": "2026-06-01",
+  "assets": {
+    "directory": "./dist"
+  }
+}

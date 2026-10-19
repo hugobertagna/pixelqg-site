@@ -4,3 +4,4 @@ dist/
 Thumbs.db
 desktop.ini
 *.log
+.wrangler/
