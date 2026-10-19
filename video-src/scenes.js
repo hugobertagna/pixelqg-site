@@ -109,7 +109,7 @@
   const MOCHI = A({
     name: 'MOCHI', color: 'yellow', spawn: 29.75, start: S.meetE, parent: LUNA.id,
     legs: [{ at: 30.8, path: [O.DOOR.meet[0], O.DOOR.meet[1], [LL, 138], D(0, 2)], speed: 80 }],
-    says: [[29.75, 'SOUS-AGENT'], [32.8, 'ÉCRIT LES TESTS']],
+    says: [[29.75, 'SOUS-PIX'], [32.8, 'ÉCRIT LES TESTS']],
   });
   const ZEPHYR = A({
     name: 'ZÉPHYR', color: 'teal', spawn: 20.2, start: S.entrance,
@@ -141,10 +141,10 @@
     { t: 41.8, cx: 200, cy: 125, zoom: 3, ax: 690, ay: 640 },
   ];
   const ROOM_CAPS = [
-    { a: 21.9, b: 23.95, k: 'lib', title: ['IL LIT DU CODE'], sub: 'Lecture et recherche dans tes fichiers.', tools: 'Read · Grep · Glob' },
+    { a: 21.9, b: 23.95, k: 'lib', title: ['TON PIX LIT', 'DU CODE'], sub: 'Lecture et recherche dans tes fichiers.', tools: 'Read · Grep · Glob' },
     { a: 24.3, b: 26.35, k: 'srv', title: ['IL LANCE', 'DES COMMANDES'], sub: 'Build, tests, scripts : direction la salle serveurs.', tools: 'Bash · npm · git' },
     { a: 26.7, b: 28.75, k: 'web', title: ['IL CHERCHE', 'SUR LE WEB'], sub: 'Recherches et lecture de pages web.', tools: 'WebSearch · WebFetch' },
-    { a: 29.1, b: 31.15, k: 'meet', title: ['IL DÉLÈGUE'], sub: 'Il confie une partie du travail à un sous-agent… qui apparaît à côté de lui.', tools: 'Task → sous-agent' },
+    { a: 29.1, b: 31.15, k: 'meet', title: ['IL DÉLÈGUE', 'À UN SOUS-PIX'], sub: 'Il confie une partie du travail à un sous-pix… qui apparaît à côté de lui.', tools: 'Task → sous-agent' },
     { a: 31.5, b: 34.3, k: 'cafe', title: ['MISSION', 'TERMINÉE'], sub: 'Travail fini : pause café bien méritée.', tools: 'Statut : terminé ✓' },
   ];
 
@@ -257,7 +257,7 @@
       drawBot(ctx, W / 2, Math.round(y - hop), 12, { color: C.cyan, look: t > 9.0 && t < 9.8 ? 1 : 0, blink: Math.floor(t * 4) === 43, antenna: Math.floor(t * 3) % 2 ? C.lamp : '#fff2c0', smile: t > 10.2 });
     }
     drawTitle(ctx, t, 7.55);
-    const tag = 'TON QG D’AGENTS IA, EN PIXEL ART.';
+    const tag = 'CHAQUE AGENT IA DEVIENT UN PIX.';
     if (t > 9.2) ptext(ctx, tag, W / 2, 560, 5, C.ink, { align: 'center', chars: Math.floor(prog(t, 9.2, 10.1) * tag.length) });
     const bp = prog(t, 10.3, 10.7);
     if (bp > 0) {
@@ -274,7 +274,7 @@
   const SWATCHES = ['#ff9a4a', '#4aa3ff', '#6fd36a', '#b07cff', '#ffc84a', '#ff6fae', '#3fd4c4', '#c6e65a', '#8f9dff', '#ff6b5e'];
   function s3(ctx, t) {
     bgGrid(ctx);
-    stepChip(ctx, 1, 'LANCE UN AGENT', 120, 70, prog(t, 11.9, 12.4));
+    stepChip(ctx, 1, 'LANCE UN PIX', 120, 70, prog(t, 11.9, 12.4));
     const pp = prog(t, 12.0, 12.5);
     const out = prog(t, 16.4, 16.9);
     ctx.save();
@@ -283,7 +283,7 @@
     ctx.save(); ctx.shadowColor = 'rgba(0,0,0,0.5)'; ctx.shadowBlur = 50; ctx.shadowOffsetY = 20;
     box(ctx, px0, py0, pw, ph, { r: 14, fill: C.panel }); ctx.restore();
     box(ctx, px0, py0, pw, ph, { r: 14, stroke: C.line2, lw: 2 });
-    PF.draw(ctx, 'NOUVEL AGENT', px0 + 40, py0 + 36, 4, C.ink);
+    PF.draw(ctx, 'NOUVEAU PIX', px0 + 40, py0 + 36, 4, C.ink);
     text(ctx, 'Ctrl + Entrée pour lancer', px0 + pw - 40, py0 + 60, { size: 22, weight: 500, color: C.mute, align: 'right' });
     ctx.fillStyle = C.line; ctx.fillRect(px0, py0 + 96, pw, 2);
     // mission
@@ -322,7 +322,7 @@
     const bx = lx + 380, by = ty + 400 + (press ? 4 : 0), bw = 320, bh = 76;
     if (!press) { ctx.fillStyle = C.lampD; root.Q.rrect(ctx, bx, ty + 406, bw, bh, 10); ctx.fill(); }
     box(ctx, bx, by, bw, bh, { r: 10, fill: press ? C.lampD : C.lamp });
-    text(ctx, 'Lancer l’agent', bx + bw / 2, by + 49, { size: 30, weight: 700, color: '#1a1206', align: 'center' });
+    text(ctx, 'Lancer le pix', bx + bw / 2, by + 49, { size: 30, weight: 700, color: '#1a1206', align: 'center' });
     ctx.restore();
     // click burst + bot popping out of the button
     const burst = prog(t, 16.0, 16.5);
@@ -374,7 +374,7 @@
     { a: PIXEL, act: 'Exécute npm test', st: 'TRAVAILLE', tok: 61.7, rate: 2.4, cost: 0.17, time: 128 },
     { a: ORION, act: 'Cherche « docs API »', st: 'TRAVAILLE', tok: 39.9, rate: 1.6, cost: 0.09, time: 121 },
     { a: LUNA, act: 'Délègue : les tests', st: 'TRAVAILLE', tok: 72.4, rate: 2.1, cost: 0.21, time: 119 },
-    { a: MOCHI, act: 'Écrit les tests', st: 'SOUS-AGENT', tok: 18.3, rate: 2.8, cost: 0.05, time: 41, sub: true },
+    { a: MOCHI, act: 'Écrit les tests', st: 'SOUS-PIX', tok: 18.3, rate: 2.8, cost: 0.05, time: 41, sub: true },
     { a: ZEPHYR, act: 'Terminé ✓', st: 'TERMINÉ ✓', tok: 52.6, rate: 0, cost: 0.14, time: 96 },
   ];
   const mmss = (s) => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
@@ -385,7 +385,7 @@
     ptext(ctx, 'TOUT EST MESURÉ, EN DIRECT.', 92, 52, 6, C.ink, { chars: Math.floor(prog(t, base, base + 0.8) * 27) });
     const cnt = ease.outQuint(prog(t, base + 0.3, base + 2.6));
     const tiles = [
-      ['AGENTS ACTIFS', `${Math.round(cnt * 6)} / 8`],
+      ['PIX ACTIFS', `${Math.round(cnt * 6)} / 8`],
       ['TOKENS TOTAUX', `${frNum(cnt * 1.24 + Math.max(0, t - base - 2.6) * 0.004, 2)} M`],
       ['COÛT TOTAL', `$${frNum(cnt * 0.86 + Math.max(0, t - base - 2.6) * 0.003, 2)}`],
       ['TEMPS CUMULÉ', mmss(cnt * 872 + Math.max(0, t - base - 2.6) * 6)],
@@ -514,7 +514,7 @@
         text(ctx, 'Actif', x + 110, y + 164, { size: 24, weight: 600, color: C.dim });
       }
     };
-    card(x0 + 40, y0 + 240, 740, 'exemple/agents-team', 'PRÊT', '#58f08a', '48 agents · chargés dans tes agents', null);
+    card(x0 + 40, y0 + 240, 740, 'exemple/agents-team', 'PRÊT', '#58f08a', '48 agents · chargés dans tes pix', null);
     const cp = prog(t, 48.35, 48.75);
     if (cp > 0) {
       ctx.save(); ctx.globalAlpha = clamp(cp * 2); ctx.translate(0, (1 - ease.out(cp)) * 40);
@@ -533,7 +533,7 @@
     const fp = prog(t, 50.0, 50.4);
     if (fp > 0) {
       ctx.globalAlpha = fp;
-      ptext(ctx, '→ CHARGÉS DANS TES PROCHAINS AGENTS', x0 + 40, y0 + 520, 5, C.lamp);
+      ptext(ctx, '→ CHARGÉS DANS TES PROCHAINS PIX', x0 + 40, y0 + 520, 5, C.lamp);
       for (let i = 0; i < 6; i++) {
         const bt = t - 50.0 - i * 0.12;
         if (bt < 0) continue;
@@ -542,7 +542,7 @@
       ctx.globalAlpha = 1;
     }
     ctx.restore();
-    caption(ctx, 'Clone des dépôts GitHub publics de skills et d’agents : tes agents s’en servent.', 990, prog(t, 46.9, 47.4));
+    caption(ctx, 'Clone des dépôts GitHub publics de skills et d’agents : tes pix s’en servent.', 990, prog(t, 46.9, 47.4));
   }
 
   // ---------- S7: the real software ----------

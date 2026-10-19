@@ -174,7 +174,7 @@
       else { ctx.fillStyle = p.ch === 'Q' || p.ch === 'G' ? C.lamp : C.ink; ctx.fillRect(p.x, p.y + yo, s, s); }
     }
     ctx.globalAlpha = 1;
-    const t1 = 'TON QG D’AGENTS IA,', t2 = 'EN PIXEL ART.';
+    const t1 = 'CHAQUE AGENT IA', t2 = 'DEVIENT UN PIX.';
     if (t > 8.0) {
       ptext(ctx, t1, VW / 2, 850, 6, C.ink, { align: 'center', chars: Math.floor(prog(t, 8.0, 8.5) * t1.length) });
       ptext(ctx, t2, VW / 2, 915, 6, C.ink, { align: 'center', chars: Math.floor(prog(t, 8.5, 8.9) * t2.length) });
@@ -202,11 +202,11 @@
     { t: 9.8, ...OV, spot: { x: 0, y: 0, w: 400, h: 250, a: 0 } }, { t: 12.4, ...OV },
   ];
   const HEAD_B = [
-    { a: 0, b: 2.3, k: null, lines: ['CHAQUE AGENT IA', 'DEVIENT UN PERSO'], sub: 'Il va dans la salle de ce qu’il fait.' },
-    { a: 2.3, b: 3.75, k: 'lib', lines: ['IL LIT DU CODE'], sub: 'Lecture et recherche dans tes fichiers' },
+    { a: 0, b: 2.3, k: null, lines: ['CHAQUE AGENT IA', 'DEVIENT UN PIX'], sub: 'Ton pix va dans la salle de ce qu’il fait.' },
+    { a: 2.3, b: 3.75, k: 'lib', lines: ['TON PIX LIT', 'DU CODE'], sub: 'Lecture et recherche dans tes fichiers' },
     { a: 3.75, b: 5.15, k: 'srv', lines: ['IL LANCE', 'DES COMMANDES'], sub: 'Build, tests, scripts' },
     { a: 5.15, b: 6.55, k: 'web', lines: ['IL CHERCHE', 'SUR LE WEB'], sub: 'Recherches et pages web' },
-    { a: 6.55, b: 7.85, k: 'meet', lines: ['IL DÉLÈGUE'], sub: 'Un sous-agent prend le relais' },
+    { a: 6.55, b: 7.85, k: 'meet', lines: ['IL DÉLÈGUE', 'À UN SOUS-PIX'], sub: 'Le sous-pix prend le relais' },
     { a: 7.85, b: 9.4, k: 'cafe', lines: ['MISSION', 'TERMINÉE'], sub: 'Pause café bien méritée' },
     { a: 9.4, b: 12.6, k: null, lines: ['TOUT EST MESURÉ', 'EN DIRECT'], sub: null, hud: true },
   ];
@@ -231,7 +231,7 @@
     if (hd.sub) centered(ctx, hd.sub, y + 30, { size: 40 });
     if (hd.hud) {
       const cnt = ease.outQuint(prog(t, 9.6, 11.2));
-      const tiles = [['TOKENS', (cnt * 1.24).toFixed(2).replace('.', ',') + ' M'], ['COÛT', '$' + (cnt * 0.86).toFixed(2).replace('.', ',')], ['AGENTS', Math.round(cnt * 6) + ' / 8']];
+      const tiles = [['TOKENS', (cnt * 1.24).toFixed(2).replace('.', ',') + ' M'], ['COÛT', '$' + (cnt * 0.86).toFixed(2).replace('.', ',')], ['PIX ACTIFS', Math.round(cnt * 6) + ' / 8']];
       tiles.forEach(([lab, val], i) => {
         const tp = prog(t, 9.6 + i * 0.12, 10.0 + i * 0.12);
         if (tp <= 0) return;
@@ -283,9 +283,9 @@
     ctx.restore();
   }
   const CARDS = [
-    { title: 'Skills pour écrire des tests', by: 'Marie', date: '12 oct.', desc: 'Jest, Vitest et Playwright : tes agents écrivent des tests propres.', tags: ['TESTS', 'JAVASCRIPT'], repo: 'github.com/marie/skills-tests' },
+    { title: 'Skills pour écrire des tests', by: 'Marie', date: '12 oct.', desc: 'Jest, Vitest et Playwright : tes pix écrivent des tests propres.', tags: ['TESTS', 'JAVASCRIPT'], repo: 'github.com/marie/skills-tests' },
     { title: 'Agent rédacteur de documentation', by: 'Hugo', date: '9 oct.', desc: 'Il lit ton code et rédige un README clair, avec exemples.', tags: ['DOCS', 'MARKDOWN'] },
-    { title: 'Pack React et Next.js', by: 'PixelFan', date: '3 oct.', desc: 'Composants, hooks et bonnes pratiques pour tes agents.', tags: ['REACT'] },
+    { title: 'Pack React et Next.js', by: 'PixelFan', date: '3 oct.', desc: 'Composants, hooks et bonnes pratiques pour tes pix.', tags: ['REACT'] },
   ];
   function c2(ctx, t) {
     bgGrid(ctx);
@@ -334,7 +334,7 @@
         text(ctx, 'marie/skills-tests', x + 60, cy + 54, { size: 32, weight: 700, mono: true });
         const ready = t >= 11.0;
         if (!ready) { box(ctx, x + 60, cy + 80, 620, 16, { r: 8, fill: '#0b0d1a' }); box(ctx, x + 60, cy + 80, Math.max(16, 620 * ease.inOut(prog(t, 10.4, 11.0))), 16, { r: 8, fill: C.cyan }); }
-        else text(ctx, '20 skills · prêts pour tes agents', x + 60, cy + 100, { size: 28, weight: 500, color: C.dim });
+        else text(ctx, '20 skills · prêts pour tes pix', x + 60, cy + 100, { size: 28, weight: 500, color: C.dim });
         S.ui.pill(ctx, ready ? 'PRÊT' : 'CLONAGE…', x + 770, cy + 30, ready ? '#58f08a' : C.cyan, 3);
         ctx.restore();
         const sp = prog(t, 11.0, 11.6);
@@ -345,7 +345,7 @@
         }
         ctx.globalAlpha = 1;
       }
-      if (t > 11.3) ptext(ctx, '→ TES AGENTS S’EN SERVENT', VW / 2, y + 395, fit('→ TES AGENTS S’EN SERVENT', 900, 5), C.lamp, { align: 'center', chars: Math.floor(prog(t, 11.3, 11.9) * 25) });
+      if (t > 11.3) ptext(ctx, '→ TES PIX S’EN SERVENT', VW / 2, y + 395, fit('→ TES PIX S’EN SERVENT', 900, 5), C.lamp, { align: 'center', chars: Math.floor(prog(t, 11.3, 11.9) * 25) });
     }
   }
 
