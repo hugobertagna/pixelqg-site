@@ -1,0 +1,6 @@
+source-captures/
+raw-captures/
+dist/
+Thumbs.db
+desktop.ini
+*.log

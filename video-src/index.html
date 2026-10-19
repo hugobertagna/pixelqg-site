@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>PixelQG — source de la vidéo</title>
+<style>
+  html, body { margin: 0; background: #000; overflow: hidden; }
+  canvas { display: block; }
+  /* Preview mode (opened by hand in a browser): fit the canvas to the window. */
+  body.preview { overflow: auto; background: #111; color: #ccc; font: 14px system-ui; }
+  body.preview canvas { width: min(100vw, 1600px); height: auto; margin: 0 auto; }
+  body.preview .bar { display: flex; gap: 12px; align-items: center; padding: 8px 12px; }
+  body.preview input[type=range] { flex: 1; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1920" height="1080"></canvas>
+<script src="pixelfont.js"></script>
+<script src="lib.js"></script>
+<script src="office.js"></script>
+<script src="scenes.js"></script>
+<script>
+  // ?mode=main (65 s explainer, 1920x1080) or ?mode=loop (8 s hero loop, 1200x750).
+  // The renderer calls window.renderFrame(i) then captures the page; nothing here depends on wall-clock time.
+  const params = new URLSearchParams(location.search);
+  const MODE = params.get('mode') || 'main';
+  const FPS = 30;
+  const canvas = document.getElementById('c');
+  if (MODE === 'loop') { canvas.width = 1200; canvas.height = 750; }
+  const ctx = canvas.getContext('2d');
+  window.VIDEO = { mode: MODE, fps: FPS, width: canvas.width, height: canvas.height, duration: MODE === 'loop' ? Story.LOOP_DURATION : Story.DURATION };
+  window.renderAt = (t) => (MODE === 'loop' ? Story.renderLoop(ctx, t) : Story.renderMain(ctx, t));
+  window.renderFrame = (i) => { window.renderAt(i / FPS); return true; };
+  window.ready = Story.loadImages().then(() => { window.renderAt(0); return window.VIDEO; });
+
+  if (params.has('preview')) {
+    document.body.classList.add('preview');
+    const bar = document.createElement('div'); bar.className = 'bar';
+    bar.innerHTML = '<button id="play">▶</button><input id="t" type="range" min="0" step="0.0333"><span id="lab"></span>';
+    document.body.prepend(bar);
+    const range = bar.querySelector('#t'), lab = bar.querySelector('#lab');
+    window.ready.then((v) => {
+      range.max = v.duration;
+      let playing = false, last = 0;
+      const show = () => { window.renderAt(+range.value); lab.textContent = (+range.value).toFixed(2) + ' s'; };
+      range.oninput = show;
+      bar.querySelector('#play').onclick = () => { playing = !playing; last = performance.now(); };
+      const tick = (now) => { if (playing) { range.value = (+range.value + (now - last) / 1000) % v.duration; show(); } last = now; requestAnimationFrame(tick); };
+      requestAnimationFrame(tick); show();
+    });
+  }
+</script>
+</body>
+</html>
