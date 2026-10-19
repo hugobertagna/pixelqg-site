@@ -2,8 +2,6 @@
 (function () {
   'use strict';
 
-  // Buy buttons link to compte.html#acheter in the HTML: the purchase is tied to an account there.
-
   // ---- Contact link from CONTACT_EMAIL (falls back to legal/contact.html) ----
   var email = typeof CONTACT_EMAIL === 'string' ? CONTACT_EMAIL.trim() : '';
   if (/^[^\s@<>"]+@[^\s@<>"]+\.[^\s@<>"]+$/.test(email)) {
@@ -80,5 +78,41 @@
       new IntersectionObserver(function (entries) { visible = entries[0].isIntersecting; sync(); }, { threshold: 0.15 }).observe(video);
     }
     if (reduce && reduce.addEventListener) reduce.addEventListener('change', sync);
+  }
+
+  // ---- Live GitHub star count in the navbar (public API, refreshed every minute) ----
+  var starsBox = document.querySelector('[data-gh-stars]');
+  var starsCount = document.querySelector('[data-gh-count]');
+  var ghLink = document.querySelector('[data-gh-link]');
+  if (starsBox && starsCount && window.fetch) {
+    var REPO_API = 'https://api.github.com/repos/hugobertagna/pixelqg-app';
+    var last = null;
+    var fmt = function (n) {
+      if (n < 1000) return String(n);
+      return (Math.round(n / 100) / 10).toString().replace('.', ',') + ' k';
+    };
+    var show = function (n) {
+      starsCount.textContent = fmt(n);
+      starsBox.hidden = false;
+      if (ghLink) ghLink.setAttribute('aria-label', 'PixelQG sur GitHub : ' + n + (n > 1 ? ' étoiles' : ' étoile'));
+      if (last !== null && n > last) {
+        starsBox.classList.remove('is-bump');
+        void starsBox.offsetWidth; // restart the animation
+        starsBox.classList.add('is-bump');
+      }
+      last = n;
+    };
+    var load = function () {
+      if (document.hidden) return;
+      fetch(REPO_API, { headers: { Accept: 'application/vnd.github+json' }, cache: 'no-store' })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (repo) {
+          if (repo && typeof repo.stargazers_count === 'number') show(repo.stargazers_count);
+        })
+        .catch(function () { /* offline or rate-limited: keep the last value */ });
+    };
+    load();
+    setInterval(load, 60000);
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) load(); });
   }
 })();

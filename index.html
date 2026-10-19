@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PixelQG — tes agents IA ont enfin un bureau</title>
-<meta name="description" content="Avec PixelQG, chaque agent IA de Claude Code devient un pix : un petit personnage pixel art qui travaille dans un QG, avec une salle par activité et les tokens, le temps et le coût en direct. App Windows, essai gratuit de 7 jours, puis 10 € en paiement unique.">
+<meta name="description" content="Avec PixelQG, chaque agent IA de Claude Code devient un pix : un petit personnage pixel art qui travaille dans un QG, avec une salle par activité et les tokens, le temps et le coût en direct. Application Windows gratuite et open source (licence MIT).">
 <meta name="theme-color" content="#0a0c19">
 <meta name="color-scheme" content="dark">
 <!-- Réseaux sociaux : une fois le site en ligne, remplace og:image par l'adresse complète (https://ton-site/images/og-image.jpg). -->
 <meta property="og:type" content="website">
 <meta property="og:locale" content="fr_FR">
 <meta property="og:title" content="PixelQG — tes agents IA ont enfin un bureau">
-<meta property="og:description" content="Chaque agent IA de Claude Code devient un pix qui bosse dans un bureau en pixel art, avec tokens, temps et coût en direct. Essai gratuit de 7 jours, puis 10 € une fois.">
+<meta property="og:description" content="Chaque agent IA de Claude Code devient un pix qui bosse dans un bureau en pixel art, avec tokens, temps et coût en direct. Gratuit et open source.">
 <meta property="og:image" content="images/og-image.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="favicon.png" type="image/png">
@@ -19,8 +19,6 @@
 <link rel="stylesheet" href="css/style.css">
 <script src="config.js"></script>
 <script src="js/main.js" defer></script>
-<script src="js/account.js" defer></script>
-<script src="js/waitlist.js" defer></script>
 </head>
 <body>
 <a class="skip" href="#contenu">Aller au contenu</a>
@@ -36,14 +34,16 @@
         <li><a href="#comment">Comment ça marche</a></li>
         <li><a href="#fonctions">Fonctionnalités</a></li>
         <li><a href="#salles">Les salles</a></li>
+        <li><a href="#communaute">Communauté</a></li>
         <li><a href="#faq">FAQ</a></li>
       </ul>
-      <ul class="nav__site">
-        <li><a href="workshop.html">Workshop</a></li>
-        <li><a href="compte.html">Mon compte</a></li>
-      </ul>
     </nav>
-    <a class="btn btn--sm nav__buy" data-buy href="compte.html#acheter">Acheter · 10&nbsp;€</a>
+    <a class="btn btn--sm btn--ghost nav__gh" href="https://github.com/hugobertagna/pixelqg-app" target="_blank" rel="noopener" aria-label="PixelQG sur GitHub" data-gh-link>
+      <svg class="ico ico--gh" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+      <span class="nav__gh-label">GitHub</span>
+      <span class="gh-stars" data-gh-stars hidden><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M3 0h2v2h2v1H6v1h1v3H6V6H5V5H3v1H2v1H1V4h1V3H1V2h2z"/></svg><span data-gh-count>0</span></span>
+    </a>
+    <a class="btn btn--sm nav__cta" href="https://github.com/hugobertagna/pixelqg-app/releases/latest" aria-label="Télécharger PixelQG"><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M3 0h2v1H3zM3 1h2v1H3zM3 2h2v1H3zM1 3h6v1H1zM2 4h4v1H2zM3 5h2v1H3zM0 7h8v1H0z"/></svg><span class="nav__cta-label">Télécharger</span></a>
   </div>
 </header>
 
@@ -56,13 +56,14 @@
     <h1 id="hero-titre" class="h1">Tes agents IA ont enfin un <span class="hl">bureau</span>.</h1>
     <p class="lead">Avec PixelQG, chaque agent IA de Claude Code devient un <strong>pix</strong>&nbsp;: un petit personnage qui vit dans un QG en pixel art. Ton pix lit à la bibliothèque, lance ses commandes en salle serveurs, délègue en salle de réunion… et toi, tu vois tout en direct&nbsp;: qui fait quoi, depuis combien de temps, et combien ça coûte.</p>
     <div class="cta">
-      <a class="btn btn--lg" href="compte.html#inscription">Essai gratuit — 7 jours</a>
-      <a class="btn btn--lg btn--ghost" href="#demo"><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 0h1v1H1zM1 1h2v1H1zM1 2h3v1H1zM1 3h4v1H1zM1 4h3v1H1zM1 5h2v1H1zM1 6h1v1H1z"/></svg>Voir la démo (1&nbsp;min)</a>
+      <a class="btn btn--lg" href="https://github.com/hugobertagna/pixelqg-app/releases/latest"><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M3 0h2v1H3zM3 1h2v1H3zM3 2h2v1H3zM1 3h6v1H1zM2 4h4v1H2zM3 5h2v1H3zM0 7h8v1H0z"/></svg>Télécharger gratuitement</a>
+      <a class="btn btn--lg btn--ghost" href="https://github.com/hugobertagna/pixelqg-app">Voir le code sur GitHub</a>
     </div>
+    <p class="hero__demo"><a href="#demo"><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 0h1v1H1zM1 1h2v1H1zM1 2h3v1H1zM1 3h4v1H1zM1 4h3v1H1zM1 5h2v1H1zM1 6h1v1H1z"/></svg>Voir la démo (1&nbsp;min)</a></p>
     <ul class="ticks">
-      <li><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M7 1h1v1H7zM6 2h2v1H6zM0 3h1v1H0zM5 3h2v1H5zM0 4h2v1H0zM4 4h2v1H4zM1 5h4v1H1zM2 6h2v1H2z"/></svg>Essai gratuit de 7 jours, sans carte bancaire</li>
-      <li><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M7 1h1v1H7zM6 2h2v1H6zM0 3h1v1H0zM5 3h2v1H5zM0 4h2v1H0zM4 4h2v1H4zM1 5h4v1H1zM2 6h2v1H2z"/></svg>Puis 10&nbsp;€ une fois, sans abonnement</li>
-      <li><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M7 1h1v1H7zM6 2h2v1H6zM0 3h1v1H0zM5 3h2v1H5zM0 4h2v1H0zM4 4h2v1H4zM1 5h4v1H1zM2 6h2v1H2z"/></svg>Tourne en local sur ton PC</li>
+      <li><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M7 1h1v1H7zM6 2h2v1H6zM0 3h1v1H0zM5 3h2v1H5zM0 4h2v1H0zM4 4h2v1H4zM1 5h4v1H1zM2 6h2v1H2z"/></svg>Gratuit</li>
+      <li><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M7 1h1v1H7zM6 2h2v1H6zM0 3h1v1H0zM5 3h2v1H5zM0 4h2v1H0zM4 4h2v1H4zM1 5h4v1H1zM2 6h2v1H2z"/></svg>Open source (MIT)</li>
+      <li><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M7 1h1v1H7zM6 2h2v1H6zM0 3h1v1H0zM5 3h2v1H5zM0 4h2v1H0zM4 4h2v1H4zM1 5h4v1H1zM2 6h2v1H2z"/></svg>Tout reste sur ton PC</li>
     </ul>
   </div>
 
@@ -215,7 +216,7 @@
     </div>
 
     <ul class="minis">
-      <li><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 1h6v1H1zM0 2h1v1H0zM2 2h1v1H2zM5 2h1v1H5zM7 2h1v1H7zM0 3h3v1H0zM4 3h1v1H4zM6 3h2v1H6zM0 4h1v1H0zM2 4h1v1H2zM5 4h1v1H5zM7 4h1v1H7zM0 5h8v1H0zM0 6h2v1H0zM6 6h2v1H6z"/></svg><div><h3 class="h4">Workshop communautaire</h3><p>Trouve et partage des skills GitHub avec les autres membres PixelQG.</p></div></li>
+      <li><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 1h6v1H1zM0 2h1v1H0zM2 2h1v1H2zM5 2h1v1H5zM7 2h1v1H7zM0 3h3v1H0zM4 3h1v1H4zM6 3h2v1H6zM0 4h1v1H0zM2 4h1v1H2zM5 4h1v1H5zM7 4h1v1H7zM0 5h8v1H0zM0 6h2v1H0zM6 6h2v1H6z"/></svg><div><h3 class="h4">Communauté GitHub</h3><p>Partage et trouve des skills avec les autres utilisateurs, dans les GitHub Discussions.</p></div></li>
       <li><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 0h6v1H1zM0 1h1v1H0zM7 1h1v1H7zM0 2h1v1H0zM3 2h2v1H3zM7 2h1v1H7zM0 3h1v1H0zM2 3h4v1H2zM7 3h1v1H7zM0 4h1v1H0zM3 4h2v1H3zM7 4h1v1H7zM1 5h1v1H1zM6 5h1v1H6zM2 6h1v1H2zM5 6h1v1H5zM3 7h2v1H3z"/></svg><div><h3 class="h4">Permissions claires</h3><p>Prudent (lecture seule) ou plus d’autonomie, choisi pix par pix.</p></div></li>
       <li><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M0 0h8v1H0zM0 1h1v1H0zM7 1h1v1H7zM0 2h1v1H0zM2 2h1v1H2zM4 2h1v1H4zM7 2h1v1H7zM0 3h1v1H0zM7 3h1v1H7zM0 4h8v1H0zM1 5h2v1H1zM1 6h1v1H1z"/></svg><div><h3 class="h4">Nouvelles consignes</h3><p>Réponds à un pix qui t’attend ou relance-le avec une nouvelle instruction.</p></div></li>
       <li><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M0 1h2v1H0zM3 1h5v1H3zM0 3h2v1H0zM3 3h5v1H3zM0 5h2v1H0zM3 5h4v1H3z"/></svg><div><h3 class="h4">Journal détaillé</h3><p>L’onglet Journal garde la trace de chaque action du pix.</p></div></li>
@@ -260,43 +261,51 @@
   </div>
 </section>
 
-<!-- ============ PRIX ============ -->
-<section class="section section--alt" id="prix" aria-labelledby="prix-titre">
+<!-- ============ GRATUIT ET OPEN SOURCE ============ -->
+<section class="section section--alt" id="gratuit" aria-labelledby="gratuit-titre">
   <div class="wrap">
-    <p class="sign" style="--c: var(--amber)" aria-hidden="true">Boutique</p>
-    <h2 id="prix-titre" class="h2">Un prix. Une fois.</h2>
-    <div class="pricing">
+    <p class="sign" style="--c: var(--amber)" aria-hidden="true">Atelier ouvert</p>
+    <h2 id="gratuit-titre" class="h2">Gratuit et open source</h2>
+    <p class="sub">PixelQG est un logiciel libre sous licence MIT&nbsp;: tu l’utilises, tu le modifies et tu le partages comme tu veux.</p>
+    <div class="oss">
       <div class="price-card">
-        <p class="trial-badge">Essai gratuit de 7 jours, sans carte bancaire</p>
         <div class="price-card__head">
-          <p class="price"><span class="price__amount">10&nbsp;€</span><span class="price__note">paiement unique</span></p>
+          <p class="price"><span class="price__amount">0&nbsp;€</span><span class="price__note">licence MIT</span></p>
           <img class="px price-card__bot" src="images/bot-amber.png" width="12" height="15" alt="">
         </div>
         <h3 class="h4">Ce qui est inclus</h3>
         <ul class="incl">
-          <li><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M7 1h1v1H7zM6 2h2v1H6zM0 3h1v1H0zM5 3h2v1H5zM0 4h2v1H0zM4 4h2v1H4zM1 5h4v1H1zM2 6h2v1H2z"/></svg>L’application PixelQG pour Windows, prête à lancer</li>
+          <li><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M7 1h1v1H7zM6 2h2v1H6zM0 3h1v1H0zM5 3h2v1H5zM0 4h2v1H0zM4 4h2v1H4zM1 5h4v1H1zM2 6h2v1H2z"/></svg>L’application PixelQG pour Windows, avec son installeur</li>
           <li><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M7 1h1v1H7zM6 2h2v1H6zM0 3h1v1H0zM5 3h2v1H5zM0 4h2v1H0zM4 4h2v1H4zM1 5h4v1H1zM2 6h2v1H2z"/></svg>Le bureau pixel art animé et ses six salles</li>
           <li><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M7 1h1v1H7zM6 2h2v1H6zM0 3h1v1H0zM5 3h2v1H5zM0 4h2v1H0zM4 4h2v1H4zM1 5h4v1H1zM2 6h2v1H2z"/></svg>Le HUD, la liste de l’équipe et la fiche de chaque pix</li>
           <li><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M7 1h1v1H7zM6 2h2v1H6zM0 3h1v1H0zM5 3h2v1H5zM0 4h2v1H0zM4 4h2v1H4zM1 5h4v1H1zM2 6h2v1H2z"/></svg>Le terminal intégré et la bibliothèque de skills GitHub</li>
-          <li><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M7 1h1v1H7zM6 2h2v1H6zM0 3h1v1H0zM5 3h2v1H5zM0 4h2v1H0zM4 4h2v1H4zM1 5h4v1H1zM2 6h2v1H2z"/></svg>L’accès au Workshop pour publier tes skills</li>
-          <li><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M7 1h1v1H7zM6 2h2v1H6zM0 3h1v1H0zM5 3h2v1H5zM0 4h2v1H0zM4 4h2v1H4zM1 5h4v1H1zM2 6h2v1H2z"/></svg>Une licence personnelle, sans abonnement PixelQG</li>
+          <li><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M7 1h1v1H7zM6 2h2v1H6zM0 3h1v1H0zM5 3h2v1H5zM0 4h2v1H0zM4 4h2v1H4zM1 5h4v1H1zM2 6h2v1H2z"/></svg>Une communauté sur GitHub pour partager tes skills</li>
+          <li><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M7 1h1v1H7zM6 2h2v1H6zM0 3h1v1H0zM5 3h2v1H5zM0 4h2v1H0zM4 4h2v1H4zM1 5h4v1H1zM2 6h2v1H2z"/></svg>Tout le code source, sous licence MIT</li>
         </ul>
         <p class="excl"><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 1h2v1H1zM5 1h2v1H5zM2 2h4v1H2zM3 3h2v1H3zM2 4h4v1H2zM1 5h2v1H1zM5 5h2v1H5z"/></svg><span><strong>Non inclus&nbsp;:</strong> l’abonnement ou les crédits Anthropic nécessaires à Claude Code, facturés séparément par Anthropic.</span></p>
-        <a class="btn btn--lg btn--block" data-buy href="compte.html#acheter">Acheter maintenant — 10&nbsp;€</a>
-        <a class="btn btn--lg btn--block btn--ghost" href="compte.html#inscription">Commencer l’essai gratuit</a>
-        <div class="waitlist" data-waitlist-wrap hidden>
-          <p class="waitlist__title">Le paiement en ligne ouvre bientôt.</p>
-          <form class="waitlist__form" data-waitlist novalidate>
-            <div class="field">
-              <label for="wl-email-prix">Ton e-mail</label>
-              <input id="wl-email-prix" name="email" type="email" autocomplete="email" placeholder="ton@email.fr" maxlength="254" required>
-            </div>
-            <button class="btn" type="submit">Préviens-moi au lancement</button>
-          </form>
-          <p class="status-line" role="status" hidden></p>
-        </div>
-        <p class="fine">Essai gratuit de 7 jours, sans carte bancaire&nbsp;: crée ton compte, télécharge PixelQG, et l’essai démarre à ta première connexion dans l’appli (un essai par PC). Ensuite, l’achat se fait depuis ton compte et le paiement chez <span data-provider-name>notre prestataire de paiement</span>&nbsp;: aucune donnée bancaire ne transite par ce site. Voir les <a href="legal/cgv.html">conditions générales de vente</a>.</p>
+        <a class="btn btn--lg btn--block" href="https://github.com/hugobertagna/pixelqg-app/releases/latest"><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M3 0h2v1H3zM3 1h2v1H3zM3 2h2v1H3zM1 3h6v1H1zM2 4h4v1H2zM3 5h2v1H3zM0 7h8v1H0z"/></svg>Télécharger gratuitement</a>
+        <a class="btn btn--lg btn--block btn--ghost" href="https://github.com/hugobertagna/pixelqg-app">Voir le code sur GitHub</a>
+        <p class="fine">L’installeur Windows (<code>PixelQG-Setup-….exe</code>) se trouve dans la dernière version publiée sur GitHub.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMMUNAUTÉ ============ -->
+<section class="section" id="communaute" aria-labelledby="communaute-titre">
+  <div class="wrap">
+    <p class="sign" style="--c: var(--violet)" aria-hidden="true">Salle de réunion</p>
+    <h2 id="communaute-titre" class="h2">La communauté vit sur GitHub</h2>
+    <p class="sub">Pas d’inscription ici&nbsp;: on se retrouve sur le dépôt de PixelQG pour partager des skills et des agents, poser des questions et améliorer l’appli ensemble.</p>
+    <ul class="reqs comm">
+      <li><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 0h2v1H1zM5 0h2v1H5zM0 1h1v1H0zM3 1h2v1H3zM7 1h1v1H7zM0 2h1v1H0zM3 2h2v1H3zM7 2h1v1H7zM1 3h2v1H1zM5 3h2v1H5zM0 5h3v1H0zM5 5h3v1H5zM0 6h3v1H0zM5 6h3v1H5z"/></svg><h3 class="h4">Partage tes skills et agents</h3><p>Ouvre une <a href="https://github.com/hugobertagna/pixelqg-app/issues">issue</a> ou une <a href="https://github.com/hugobertagna/pixelqg-app/pulls">pull request</a> sur pixelqg-app pour proposer ton dépôt de skills ou d’agents.</p></li>
+      <li><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M0 0h8v1H0zM0 1h1v1H0zM7 1h1v1H7zM0 2h1v1H0zM2 2h1v1H2zM4 2h1v1H4zM7 2h1v1H7zM0 3h1v1H0zM7 3h1v1H7zM0 4h8v1H0zM1 5h2v1H1zM1 6h1v1H1z"/></svg><h3 class="h4">Discute avec les autres</h3><p>Questions, captures de ton QG, bons plans&nbsp;: tout se passe dans les <a href="https://github.com/hugobertagna/pixelqg-app/discussions">GitHub Discussions</a>.</p></li>
+      <li><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M0 1h2v1H0zM3 1h5v1H3zM0 3h2v1H0zM3 3h5v1H3zM0 5h2v1H0zM3 5h4v1H3z"/></svg><h3 class="h4">Branche-les dans ton QG</h3><p>L’onglet «&nbsp;Bibliothèque&nbsp;» de l’appli lie n’importe quel dépôt GitHub public de skills ou d’agents&nbsp;: colle le lien, et tes pix s’en servent.</p></li>
+      <li><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M0 0h8v1H0zM0 1h1v1H0zM7 1h1v1H7zM0 2h1v1H0zM2 2h1v1H2zM7 2h1v1H7zM0 3h1v1H0zM3 3h1v1H3zM7 3h1v1H7zM0 4h1v1H0zM2 4h1v1H2zM4 4h2v1H4zM7 4h1v1H7zM0 5h1v1H0zM7 5h1v1H7zM0 6h8v1H0z"/></svg><h3 class="h4">Améliore PixelQG</h3><p>Un bug, une idée, une correction&nbsp;? Les issues et les pull requests sont ouvertes à tous. Une étoile sur GitHub aide aussi beaucoup.</p></li>
+    </ul>
+    <div class="cta comm__cta">
+      <a class="btn btn--lg" href="https://github.com/hugobertagna/pixelqg-app/blob/main/CONTRIBUTING.md">Contribuer</a>
+      <a class="btn btn--lg btn--ghost" href="https://github.com/hugobertagna/pixelqg-app/discussions">Ouvrir les Discussions</a>
     </div>
   </div>
 </section>
@@ -306,11 +315,11 @@
   <div class="wrap">
     <p class="sign" style="--c: var(--violet)" aria-hidden="true">Check-list</p>
     <h2 id="prerequis-titre" class="h2">Ce qu’il te faut</h2>
-    <p class="sub">PixelQG pilote et affiche Claude Code&nbsp;: il ne le remplace pas. Avant d’acheter, vérifie que tu as bien&nbsp;:</p>
+    <p class="sub">PixelQG pilote et affiche Claude Code&nbsp;: il ne le remplace pas. Avant d’installer, vérifie que tu as bien&nbsp;:</p>
     <ul class="reqs">
-      <li><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M0 0h8v1H0zM0 1h1v1H0zM7 1h1v1H7zM0 2h1v1H0zM7 2h1v1H7zM0 3h1v1H0zM7 3h1v1H7zM0 4h8v1H0zM3 5h2v1H3zM1 6h6v1H1z"/></svg><h3 class="h4">Windows 10 ou 11</h3><p>PixelQG est une application Windows. Pas de version Mac ni Linux pour l’instant.</p></li>
+      <li><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M0 0h8v1H0zM0 1h1v1H0zM7 1h1v1H7zM0 2h1v1H0zM7 2h1v1H7zM0 3h1v1H0zM7 3h1v1H7zM0 4h8v1H0zM3 5h2v1H3zM1 6h6v1H1z"/></svg><h3 class="h4">Windows 10 ou 11</h3><p>PixelQG est pensé pour Windows. Sur Mac et Linux, c’est expérimental (voir la FAQ).</p></li>
       <li><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M3 0h2v1H3zM1 1h2v1H1zM5 1h2v1H5zM0 2h1v1H0zM7 2h1v1H7zM0 3h2v1H0zM6 3h2v1H6zM0 4h1v1H0zM2 4h2v1H2zM5 4h1v1H5zM7 4h1v1H7zM0 5h1v1H0zM3 5h2v1H3zM7 5h1v1H7zM1 6h2v1H1zM5 6h2v1H5zM3 7h2v1H3z"/></svg><h3 class="h4">Node.js 20 ou plus</h3><p>Gratuit, à installer depuis le site officiel de Node.js si tu ne l’as pas déjà.</p></li>
-      <li><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M0 0h8v1H0zM0 1h1v1H0zM7 1h1v1H7zM0 2h1v1H0zM2 2h1v1H2zM7 2h1v1H7zM0 3h1v1H0zM3 3h1v1H3zM7 3h1v1H7zM0 4h1v1H0zM2 4h1v1H2zM4 4h2v1H4zM7 4h1v1H7zM0 5h1v1H0zM7 5h1v1H7zM0 6h8v1H0z"/></svg><h3 class="h4">Claude Code installé et connecté</h3><p>L’outil en ligne de commande d’Anthropic, déjà connecté à ton compte. Si <code>claude</code> marche dans ton terminal, c’est bon.</p></li>
+      <li><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M0 0h8v1H0zM0 1h1v1H0zM7 1h1v1H7zM0 2h1v1H0zM2 2h1v1H2zM7 2h1v1H7zM0 3h1v1H0zM3 3h1v1H3zM7 3h1v1H7zM0 4h1v1H0zM2 4h1v1H2zM4 4h2v1H4zM7 4h1v1H7zM0 5h1v1H0zM7 5h1v1H7zM0 6h8v1H0z"/></svg><h3 class="h4">Claude Code installé et connecté</h3><p>L’outil en ligne de commande d’Anthropic, installé et connecté. Si <code>claude</code> marche dans ton terminal, c’est bon.</p></li>
       <li><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M0 1h8v1H0zM0 2h1v1H0zM7 2h1v1H7zM0 3h8v1H0zM0 4h1v1H0zM7 4h1v1H7zM0 5h1v1H0zM2 5h2v1H2zM7 5h1v1H7zM0 6h8v1H0z"/></svg><h3 class="h4">Un abonnement Anthropic</h3><p>Abonnement ou crédits Anthropic, séparés et non inclus&nbsp;: ce sont eux qui paient le travail de tes pix.</p></li>
     </ul>
   </div>
@@ -327,6 +336,10 @@
         <p>Une application Windows qui lance de vrais agents Claude Code et montre chacun d’eux comme un pix, un petit personnage qui bosse dans un bureau en pixel art, avec ses statistiques en direct. Le travail est fait par Claude Code&nbsp;; PixelQG le rend visible et plus simple à piloter.</p>
       </details>
       <details>
+        <summary>Pourquoi c’est gratuit&nbsp;?</summary>
+        <p>PixelQG est fait par un étudiant, pour le plaisir et pour la communauté. Le code est ouvert sous licence MIT&nbsp;: tu peux l’utiliser, le modifier et le partager librement. Si tu veux aider&nbsp;: une étoile sur GitHub, une issue, une pull request ou un skill partagé dans les Discussions, tout aide.</p>
+      </details>
+      <details>
         <summary>C’est quoi, un pix&nbsp;?</summary>
         <p>C’est le nom des personnages de PixelQG&nbsp;: chaque agent IA de Claude Code devient un pix, un petit robot en pixel art avec son nom et sa couleur, qui se déplace dans le QG selon ce qu’il fait. Un pix, des pix&nbsp;; et quand un pix délègue, il fait apparaître un sous-pix.</p>
       </details>
@@ -339,12 +352,8 @@
         <p>Pour faire travailler de vrais agents, il te faut Claude Code installé et connecté.</p>
       </details>
       <details>
-        <summary>Je peux l’essayer avant d’acheter&nbsp;?</summary>
-        <p>Oui&nbsp;: essai gratuit de 7 jours, sans carte bancaire. Crée ton compte, télécharge PixelQG et connecte-toi dans l’appli&nbsp;: l’essai démarre tout seul (un essai par PC). Le Workshop, lui, est réservé aux licences payées.</p>
-      </details>
-      <details>
-        <summary>Combien ça coûte à l’usage&nbsp;?</summary>
-        <p>Après l’essai gratuit de 7 jours, PixelQG coûte 10&nbsp;€, une seule fois. Tes pix, eux, consomment ton abonnement ou tes crédits Anthropic, exactement comme quand tu utilises Claude Code dans un terminal. Le HUD t’affiche les tokens et le coût en direct pour que tu gardes la main.</p>
+        <summary>Ça coûte quelque chose à l’usage&nbsp;?</summary>
+        <p>PixelQG est gratuit. Tes pix, eux, consomment ton abonnement ou tes crédits Anthropic, exactement comme quand tu utilises Claude Code dans un terminal. Le HUD t’affiche les tokens et le coût en direct pour que tu gardes la main.</p>
       </details>
       <details>
         <summary>Mon code part-il quelque part&nbsp;?</summary>
@@ -355,8 +364,8 @@
         <p>Autant que ta machine et ton forfait Anthropic le permettent. Le bureau reste lisible avec plus d’une vingtaine de pix à l’écran, sous-pix compris.</p>
       </details>
       <details>
-        <summary>Il y a une version Mac ou Linux&nbsp;?</summary>
-        <p>Pas pour l’instant&nbsp;: PixelQG est livré pour Windows 10 et 11.</p>
+        <summary>Mac et Linux&nbsp;?</summary>
+        <p>PixelQG est pensé et testé pour Windows 10 et 11. Il tourne avec Node.js, donc il peut démarrer sur Mac et Linux, mais c’est expérimental&nbsp;: certaines fonctions peuvent ne pas marcher. Tes retours sont les bienvenus dans les <a href="https://github.com/hugobertagna/pixelqg-app/issues">issues GitHub</a>.</p>
       </details>
       <details>
         <summary>Windows affiche un avertissement au premier lancement, c’est normal&nbsp;?</summary>
@@ -368,7 +377,7 @@
       </details>
       <details>
         <summary>Et si ça ne marche pas chez moi&nbsp;?</summary>
-        <p>Écris-nous via la page <a href="legal/contact.html" data-contact>contact</a> en décrivant ton problème. Les conditions de remboursement sont détaillées dans les <a href="legal/cgv.html">CGV</a>.</p>
+        <p>Ouvre une <a href="https://github.com/hugobertagna/pixelqg-app/issues">issue sur GitHub</a> en décrivant ton problème, ou écris-nous via la page <a href="legal/contact.html" data-contact>contact</a>.</p>
       </details>
     </div>
   </div>
@@ -378,10 +387,10 @@
 <section class="final" aria-labelledby="final-titre">
   <div class="wrap">
     <h2 id="final-titre" class="h2">Prêt à ouvrir ton QG&nbsp;?</h2>
-    <p class="sub">7 jours gratuits pour tester, puis 10&nbsp;€ une fois&nbsp;: tes pix emménagent.</p>
+    <p class="sub">Gratuit, open source, et tes pix emménagent en deux minutes.</p>
     <div class="cta">
-      <a class="btn btn--lg" href="compte.html#inscription">Essai gratuit — 7 jours</a>
-      <a class="btn btn--lg btn--ghost" data-buy href="compte.html#acheter">Acheter — 10&nbsp;€</a>
+      <a class="btn btn--lg" href="https://github.com/hugobertagna/pixelqg-app/releases/latest"><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M3 0h2v1H3zM3 1h2v1H3zM3 2h2v1H3zM1 3h6v1H1zM2 4h4v1H2zM3 5h2v1H3zM0 7h8v1H0z"/></svg>Télécharger gratuitement</a>
+      <a class="btn btn--lg btn--ghost" href="https://github.com/hugobertagna/pixelqg-app">Voir le code sur GitHub</a>
     </div>
   </div>
   <div class="parade" aria-hidden="true">
@@ -405,16 +414,15 @@
     </a>
     <nav aria-label="Liens du site">
       <ul class="foot__links">
-        <li><a href="workshop.html">Workshop</a></li>
-        <li><a href="compte.html">Mon compte</a></li>
+        <li><a href="#communaute">Communauté</a></li>
         <li><a href="legal/mentions-legales.html">Mentions légales</a></li>
-        <li><a href="legal/cgv.html">CGV</a></li>
+        <li><a href="https://github.com/hugobertagna/pixelqg-app">Code source</a></li>
         <li><a href="legal/contact.html">Contact</a></li>
       </ul>
     </nav>
     <p class="foot__mail">Contact&nbsp;: <a data-contact data-contact-text href="mailto:pro.hugobertagna@gmail.com">pro.hugobertagna@gmail.com</a></p>
     <p class="foot__legal">PixelQG n’est pas affilié à Anthropic. Claude et Claude Code sont des marques d’Anthropic.</p>
-    <p class="foot__copy">© <span data-year>2026</span> PixelQG</p>
+    <p class="foot__copy">© <span data-year>2026</span> PixelQG · logiciel libre sous licence MIT</p>
   </div>
 </footer>
 </body>

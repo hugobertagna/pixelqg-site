@@ -1,7 +1,7 @@
 # Clips verticaux PixelQG (TikTok, Reels, Shorts)
 
 Trois clips de 15 secondes environ, en 1080 × 1920, 30 images/s, H.264 + AAC, avec musique seule (sans voix).
-Chaque clip a sa couverture (`.jpg`) et se termine sur « PixelQG · essai gratuit 7 jours · pixelqg-site.pages.dev ».
+Chaque clip a sa couverture (`.jpg`) et se termine sur « PixelQG · gratuit et open source · github.com/hugobertagna/pixelqg-app ».
 Ce dossier n’est **pas** publié avec le site (`tools/export-public.js` ne le copie pas).
 
 Pour les régénérer : `node video-src/render.js --mode social-a` (ou `social-b`, `social-c`), environ 30 secondes chacun.
@@ -17,9 +17,9 @@ Des terminaux qui défilent : « Tes agents IA bossent… à l’aveugle. » Qui
 
 > Tes agents IA bossent dans 5 terminaux et tu ne vois rien ? 😵‍💫
 > Avec PixelQG, chaque agent IA de Claude Code devient un pix : un petit perso pixel art qui bosse dans un bureau. Tu vois qui fait quoi, et combien ça coûte.
-> Essai gratuit 7 jours, sans carte bancaire 👉 pixelqg-site.pages.dev
+> Gratuit et open source (MIT) 👉 github.com/hugobertagna/pixelqg-app
 
-`#pixelart #IA #agentsIA #pix #devtools #programmation #codeur #productivite #indiedev #claudecode`
+`#pixelart #IA #agentsIA #pix #opensource #devtools #programmation #codeur #productivite #indiedev #claudecode`
 
 ## 2. `pixelqg-bureau.mp4` : la visite du bureau
 
@@ -29,21 +29,21 @@ Chaque agent IA devient un pix. Ton pix lit du code à la bibliothèque, lance d
 
 > Et si tes agents IA avaient un vrai bureau ? 🏢 Ici, chacun devient un pix.
 > Bibliothèque = ton pix lit le code. Salle serveurs = il lance des commandes. Salle de réunion = il délègue à un sous-pix. Cafétéria = mission terminée ☕
-> Tokens et coût en direct. Essai gratuit 7 jours 👉 pixelqg-site.pages.dev
+> Tokens et coût en direct. Gratuit et open source 👉 github.com/hugobertagna/pixelqg-app
 
-`#pixelart #IA #agentsIA #pix #setupdev #devlife #programmation #retrogaming #indiedev #claudecode`
+`#pixelart #IA #agentsIA #pix #opensource #setupdev #devlife #programmation #retrogaming #indiedev #claudecode`
 
-## 3. `pixelqg-terminal-workshop.mp4` : terminal intégré et Workshop
+## 3. `pixelqg-terminal-skills.mp4` : terminal intégré et skills de la communauté
 
-On tape `claude` dans le terminal intégré et un nouveau pix rejoint le bureau. Ensuite, dans le Workshop, on copie un dépôt de skills partagé par la communauté et on le lie dans la bibliothèque de l’appli : tes pix s’en servent.
+On tape `claude` dans le terminal intégré et un nouveau pix rejoint le bureau. Ensuite, on copie un dépôt de skills partagé sur GitHub par la communauté et on le lie dans l’onglet Bibliothèque de l’appli : tes pix s’en servent.
 
 **Légende proposée**
 
 > Tape « claude » dans le terminal… et un nouveau pix débarque au bureau 👾
-> Ensuite, pioche des skills partagés par la communauté dans le Workshop : tes pix s’en servent direct.
-> Essai gratuit 7 jours, sans carte bancaire 👉 pixelqg-site.pages.dev
+> Ensuite, pioche des skills partagés par la communauté sur GitHub : tes pix s’en servent direct.
+> Gratuit et open source, les contributions sont les bienvenues 👉 github.com/hugobertagna/pixelqg-app
 
-`#pixelart #IA #agentsIA #pix #terminal #github #devtools #programmation #indiedev #claudecode`
+`#pixelart #IA #agentsIA #pix #opensource #terminal #github #devtools #programmation #indiedev #claudecode`
 
 ---
 

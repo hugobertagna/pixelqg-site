@@ -1,15 +1,17 @@
-# Site de vente PixelQG
+# Site de PixelQG (gratuit et open source)
 
 Site statique, sans étape de build : ouvre `index.html` directement, ou mets-le sur n'importe quel
 hébergeur statique (Netlify, GitHub Pages, Cloudflare Pages…).
 
-## À faire avant de vendre
+PixelQG est gratuit et open source (licence MIT) : le site n'a aucun paiement. Les boutons
+« Télécharger gratuitement » mènent à https://github.com/hugobertagna/pixelqg-app/releases/latest
+(installeur `PixelQG-Setup-*.exe`) et « Voir le code sur GitHub » à https://github.com/hugobertagna/pixelqg-app.
 
-1. **Lien de paiement** : ouvre `config.js` et colle ton lien dans `CHECKOUT_URL`
-   (Stripe Payment Link, Lemon Squeezy, Gumroad…). Tous les boutons « Acheter » l'utiliseront.
-   Tant qu'il est vide, les boutons mènent à la carte Prix avec la mention « La vente ouvre très bientôt ».
-2. **Contact** : renseigne `CONTACT_EMAIL` dans `config.js`.
-3. **Pages légales** : complète les champs `[entre crochets]` de `legal/mentions-legales.html` et `legal/cgv.html`.
+## À faire avant la mise en ligne
+
+1. **Dépôts GitHub** : publie `pixelqg-app` (avec une version qui contient l'installeur), sinon les liens mènent à une page 404.
+2. **Contact** : `config.js` ne contient que `CONTACT_EMAIL`. Le site n'a ni inscription ni base de données : la communauté vit sur GitHub (issues, pull requests, Discussions).
+3. **Pages légales** : complète les champs `[entre crochets]` de `legal/mentions-legales.html`.
 4. **Réseaux sociaux** : une fois le site en ligne, remplace `images/og-image.jpg` par l'adresse complète dans la balise `og:image` de `index.html`.
 
 ## Mettre en ligne

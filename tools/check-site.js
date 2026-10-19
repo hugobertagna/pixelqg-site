@@ -34,7 +34,7 @@ fs.mkdirSync(OUT, { recursive: true });
           pixelFont: document.fonts.check('16px "PixelQG Pixel"'),
           brokenImages: [...document.images].filter((i) => !i.naturalWidth).map((i) => i.getAttribute('src')),
           heroVideo: v ? { readyState: v.readyState, paused: v.paused, error: v.error && v.error.code } : null,
-          buyLinks: [...document.querySelectorAll('[data-buy]')].map((a) => a.getAttribute('href')),
+          githubLinks: [...new Set([...document.querySelectorAll('a[href*="github.com"]')].map((a) => a.getAttribute('href')))],
         };
       })()`);
       console.log(`--- ${w}px`, JSON.stringify(info));

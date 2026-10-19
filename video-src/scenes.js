@@ -580,23 +580,24 @@
     const qx = tx + PF.measure('PIXEL') * s + s;
     PF.draw(ctx, 'QG', qx + 8, 128, s, '#05060c'); PF.draw(ctx, 'QG', qx, 120, s, C.lamp);
     ctx.restore();
-    // price sticker
+    // « Gratuit et open source » sticker
     const pp = prog(t, 58.2, 58.75);
     if (pp > 0) {
       const k = ease.back(pp);
-      ctx.save(); ctx.translate(W / 2, 450); ctx.scale(k, k);
-      const pw = 600, ph = 250;
+      ctx.save(); ctx.translate(W / 2, 440); ctx.scale(k, k);
+      const pw = 860, ph = 230;
       plate(ctx, -pw / 2 + 12, -ph / 2 + 12, pw, ph, '#05060c', null, 10);
       plate(ctx, -pw / 2, -ph / 2, pw, ph, C.lamp, '#fff1c2', 10);
-      PF.draw(ctx, '10 €', 0 + 6, -77 + 6, 22, C.lampD, { align: 'center' });
-      PF.draw(ctx, '10 €', 0, -77, 22, '#1a1206', { align: 'center' });
+      PF.draw(ctx, 'GRATUIT', 0 + 6, -63 + 6, 18, C.lampD, { align: 'center' });
+      PF.draw(ctx, 'GRATUIT', 0, -63, 18, '#1a1206', { align: 'center' });
       ctx.restore();
     }
     const lp = prog(t, 58.8, 59.3);
     if (lp > 0) {
       ctx.save(); ctx.globalAlpha = lp;
-      ptext(ctx, 'PAIEMENT UNIQUE · PAS D’ABONNEMENT', W / 2, 628, 5, C.ink, { align: 'center' });
-      text(ctx, 'Windows 10/11  ·  Compatible avec Claude Code', W / 2, 740, { size: 34, weight: 600, color: C.cyan, align: 'center' });
+      ptext(ctx, 'ET OPEN SOURCE · LICENCE MIT', W / 2, 610, 6, C.ink, { align: 'center' });
+      text(ctx, 'github.com/hugobertagna/pixelqg-app', W / 2, 740, { size: 50, weight: 700, color: C.cyan, align: 'center' });
+      text(ctx, 'Windows 10/11  ·  compatible avec Claude Code', W / 2, 810, { size: 30, weight: 600, color: C.dim, align: 'center' });
       ctx.restore();
     }
     // marching bots

@@ -5,7 +5,7 @@
   const Q = root.Q, PF = root.PixelFont, O = root.Office, S = root.Story;
   const { C, AGENT, clamp, lerp, prog, ease, hash, rng, drawBot, box, plate, text, ptext } = Q;
   const VW = 1080, VH = 1920;
-  const URL_TEXT = 'pixelqg-site.pages.dev';
+  const URL_TEXT = 'github.com/hugobertagna/pixelqg-app';
 
   // ---------- backgrounds & transitions (vertical versions) ----------
   function bgGrid(ctx) {
@@ -55,7 +55,7 @@
     text(ctx, str, VW / 2, y, { size: o.size || 40, weight: o.weight || 600, color: o.color || C.dim, align: 'center', mono: o.mono });
   }
 
-  // ---------- shared end card: « PixelQG · essai gratuit 7 jours · pixelqg-site.pages.dev » ----------
+  // ---------- shared end card: « PixelQG · gratuit et open source · github.com/hugobertagna/pixelqg-app » ----------
   function endCard(ctx, t, t0) {
     sky(ctx, t);
     ctx.fillStyle = 'rgba(6,7,15,0.3)'; ctx.fillRect(0, 0, VW, VH);
@@ -74,7 +74,7 @@
     if (ep > 0) {
       const k = ease.back(ep);
       ctx.save(); ctx.translate(VW / 2, 860); ctx.scale(k, k);
-      const s = 8, l1 = 'ESSAI GRATUIT', l2 = '7 JOURS', w = PF.measure(l1) * s + 16 * s, h = 2 * 7 * s + 14 * s;
+      const s = 8, l1 = 'GRATUIT ET', l2 = 'OPEN SOURCE', w = Math.max(PF.measure(l1), PF.measure(l2)) * s + 16 * s, h = 2 * 7 * s + 14 * s;
       plate(ctx, -w / 2 + 10, -h / 2 + 10, w, h, '#05060c', null, s);
       plate(ctx, -w / 2, -h / 2, w, h, C.lamp, '#fff1c2', s);
       PF.draw(ctx, l1, 0, -h / 2 + 5 * s, s, '#1a1206', { align: 'center' });
@@ -84,8 +84,8 @@
     const up = prog(t, t0 + 1.2, t0 + 1.6);
     if (up > 0) {
       ctx.save(); ctx.globalAlpha = up;
-      centered(ctx, URL_TEXT, 1110, { size: 58, weight: 700, color: C.cyan });
-      centered(ctx, 'Windows 10/11 · compatible avec Claude Code', 1185, { size: 32, weight: 600, color: C.dim });
+      centered(ctx, URL_TEXT, 1110, { size: 46, weight: 700, color: C.cyan });
+      centered(ctx, 'Licence MIT · Windows 10/11 · compatible avec Claude Code', 1180, { size: 30, weight: 600, color: C.dim });
       ctx.restore();
     }
     const mp = prog(t, t0 + 1.0, t0 + 1.4);
@@ -246,7 +246,7 @@
     ctx.restore();
   }
 
-  // ---------- clip C: integrated terminal + Workshop ----------
+  // ---------- clip C: integrated terminal + community skills from GitHub ----------
   const KIWI = O.agent({
     name: 'KIWI', color: '#8f9dff', spawn: 10.5, start: O.SPOT.entrance,
     legs: [{ at: 11.0, path: [[200, O.HALL], [200, 150], O.desk(1, 2)], speed: 60 }],
@@ -289,9 +289,9 @@
   ];
   function c2(ctx, t) {
     bgGrid(ctx);
-    signPlate(ctx, 'WORKSHOP', VW / 2, 150, C.green, 6, clamp(prog(t, 6.6, 6.9) * 2));
+    signPlate(ctx, 'SKILLS DE LA COMMUNAUTÉ', VW / 2, 150, C.green, 5, clamp(prog(t, 6.6, 6.9) * 2));
     const cp = prog(t, 6.8, 7.2);
-    if (cp > 0) { ctx.save(); ctx.globalAlpha = cp; centered(ctx, 'Les skills partagés par la communauté.', 300, { size: 38 }); ctx.restore(); }
+    if (cp > 0) { ctx.save(); ctx.globalAlpha = cp; centered(ctx, 'Partagés sur GitHub par la communauté.', 300, { size: 38 }); ctx.restore(); }
     CARDS.forEach((cd, i) => {
       const p = ease.out(prog(t, 6.9 + i * 0.15, 7.4 + i * 0.15));
       if (p <= 0) return;
@@ -357,7 +357,7 @@
     b: { name: 'bureau', duration: 15.6, posterAt: 2.9, grooveAt: 0,
       scenes: [{ a: 0, b: 12.6, draw: b1 }, { a: 12.0, b: 99, draw: (c, t) => endCard(c, t, 12.2) }],
       trans: [{ a: 12.0, b: 12.6, type: 'wipe' }] },
-    c: { name: 'terminal-workshop', duration: 15.6, posterAt: 8.7, grooveAt: 0,
+    c: { name: 'terminal-skills', duration: 15.6, posterAt: 8.7, grooveAt: 0,
       scenes: [{ a: 0, b: 7.0, draw: c1 }, { a: 6.4, b: 12.6, draw: c2 }, { a: 12.0, b: 99, draw: (c, t) => endCard(c, t, 12.2) }],
       trans: [{ a: 6.4, b: 7.0, type: 'wipe' }, { a: 12.0, b: 12.6, type: 'wipe' }] },
   };
