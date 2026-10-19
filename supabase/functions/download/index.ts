@@ -1,4 +1,4 @@
-// `download`: a 10-minute signed link to the newest app release, for active licence holders only.
+// `download`: a 10-minute signed link to the newest app release, for any signed-in account.
 import { callerOf, fail, json, preflight, serviceClient } from "../_shared/http.ts";
 
 const BUCKET = "releases";
@@ -12,8 +12,7 @@ Deno.serve(async (req) => {
   const user = await callerOf(req, db);
   if (!user) return fail(req, 401, "Session expirée : reconnecte-toi.", "auth");
 
-  const { data: lic } = await db.from("licenses").select("status").eq("user_id", user.id).maybeSingle();
-  if (!lic || lic.status !== "active") return fail(req, 402, "Le téléchargement est réservé aux licences actives.", "no_license");
+  // Any signed-in account may download: the app itself refuses to run without a trial or a licence.
 
   const { data: files, error } = await db.storage.from(BUCKET).list("", {
     limit: 1, sortBy: { column: "created_at", order: "desc" },

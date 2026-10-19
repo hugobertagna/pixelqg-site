@@ -19,17 +19,26 @@
 <script src="lib.js"></script>
 <script src="office.js"></script>
 <script src="scenes.js"></script>
+<script src="social.js"></script>
 <script>
-  // ?mode=main (65 s explainer, 1920x1080) or ?mode=loop (8 s hero loop, 1200x750).
+  // ?mode=main (65 s explainer, 1920x1080), ?mode=loop (8 s hero loop, 1200x750)
+  // or ?mode=social-a|social-b|social-c (vertical clips, 1080x1920).
   // The renderer calls window.renderFrame(i) then captures the page; nothing here depends on wall-clock time.
   const params = new URLSearchParams(location.search);
   const MODE = params.get('mode') || 'main';
   const FPS = 30;
   const canvas = document.getElementById('c');
+  const SOCIAL = /^social-([abc])$/.exec(MODE);
   if (MODE === 'loop') { canvas.width = 1200; canvas.height = 750; }
+  if (SOCIAL) { canvas.width = Social.VW; canvas.height = Social.VH; }
   const ctx = canvas.getContext('2d');
-  window.VIDEO = { mode: MODE, fps: FPS, width: canvas.width, height: canvas.height, duration: MODE === 'loop' ? Story.LOOP_DURATION : Story.DURATION };
-  window.renderAt = (t) => (MODE === 'loop' ? Story.renderLoop(ctx, t) : Story.renderMain(ctx, t));
+  const clip = SOCIAL ? Social.CLIPS[SOCIAL[1]] : null;
+  window.VIDEO = {
+    mode: MODE, fps: FPS, width: canvas.width, height: canvas.height,
+    duration: clip ? clip.duration : MODE === 'loop' ? Story.LOOP_DURATION : Story.DURATION,
+    ...(clip ? { name: clip.name, posterAt: clip.posterAt, grooveAt: clip.grooveAt } : {}),
+  };
+  window.renderAt = (t) => (clip ? Social.render(ctx, SOCIAL[1], t) : MODE === 'loop' ? Story.renderLoop(ctx, t) : Story.renderMain(ctx, t));
   window.renderFrame = (i) => { window.renderAt(i / FPS); return true; };
   window.ready = Story.loadImages().then(() => { window.renderAt(0); return window.VIDEO; });
 

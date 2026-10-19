@@ -3,6 +3,7 @@
 import { callerOf, fail, json, preflight, readJson, serviceClient } from "../_shared/http.ts";
 
 const CERT_DAYS = 14;
+const TRIAL_DAYS = 7;
 const DEVICE_RE = /^[0-9a-f]{64}$/;
 
 function b64url(bytes: Uint8Array): string {
@@ -48,9 +49,12 @@ Deno.serve(async (req) => {
   const deviceHash = typeof body.device_hash === "string" ? body.device_hash.toLowerCase() : "";
   const deviceName = typeof body.device_name === "string" ? body.device_name.slice(0, 60) : null;
 
-  const { data: lic, error: licErr } = await db
-    .from("licenses").select("id, status, created_at").eq("user_id", user.id).maybeSingle();
+  let { data: lic, error: licErr } = await db
+    .from("licenses").select("id, status, created_at, trial_ends_at").eq("user_id", user.id).maybeSingle();
   if (licErr) return fail(req, 500, "Impossible de lire ta licence pour le moment.");
+
+  const publicLicense = (l: typeof lic) =>
+    l ? { status: l.status, created_at: l.created_at, trial_ends_at: l.trial_ends_at ?? null } : null;
 
   if (action === "status") {
     let devices: unknown[] = [];
@@ -59,7 +63,7 @@ Deno.serve(async (req) => {
         .eq("license_id", lic.id).order("last_seen", { ascending: false });
       devices = data ?? [];
     }
-    return json(req, 200, { ok: true, license: lic ? { status: lic.status, created_at: lic.created_at } : null, devices });
+    return json(req, 200, { ok: true, license: publicLicense(lic), devices });
   }
 
   if (!DEVICE_RE.test(deviceHash)) return fail(req, 400, "Identifiant de PC invalide.", "device");
@@ -70,7 +74,29 @@ Deno.serve(async (req) => {
   }
 
   if (action !== "activate") return fail(req, 400, "Action inconnue.");
-  if (!lic || lic.status !== "active") {
+
+  // No licence yet: start the free trial, once per PC (whatever the account).
+  if (!lic) {
+    const { error: trialErr } = await db.from("trial_devices").insert({ device_hash: deviceHash, user_id: user.id });
+    if (trialErr) {
+      if (trialErr.code === "23505") {
+        return fail(req, 402, "L'essai gratuit a déjà été utilisé sur ce PC. Achète PixelQG pour continuer.", "trial_used");
+      }
+      return fail(req, 500, "Impossible de démarrer l'essai gratuit pour le moment.");
+    }
+    const ends = new Date(Date.now() + TRIAL_DAYS * 86400 * 1000).toISOString();
+    const { data: created, error: createErr } = await db.from("licenses")
+      .insert({ user_id: user.id, status: "trial", source: "trial", trial_ends_at: ends })
+      .select("id, status, created_at, trial_ends_at").single();
+    if (createErr || !created) return fail(req, 500, "Impossible de démarrer l'essai gratuit pour le moment.");
+    lic = created;
+  }
+
+  const trialEnd = lic.status === "trial" && lic.trial_ends_at ? Math.floor(new Date(lic.trial_ends_at).getTime() / 1000) : 0;
+  if (lic.status === "trial" && trialEnd <= Math.floor(Date.now() / 1000)) {
+    return fail(req, 402, "Ton essai gratuit est terminé. Achète PixelQG pour continuer.", "trial_ended");
+  }
+  if (lic.status !== "active" && lic.status !== "trial") {
     return fail(req, 402, "Aucune licence active sur ce compte.", "no_license");
   }
 
@@ -92,10 +118,13 @@ Deno.serve(async (req) => {
   const { count } = await db.from("devices").select("id", { count: "exact", head: true }).eq("license_id", lic.id);
 
   const now = Math.floor(Date.now() / 1000);
+  const isTrial = lic.status === "trial";
+  const exp = isTrial ? Math.min(now + CERT_DAYS * 86400, trialEnd) : now + CERT_DAYS * 86400;
   let certificate: string;
   try {
     certificate = await sign({
-      v: 1, lic: lic.id, sub: user.id, email: user.email ?? "", dev: deviceHash, iat: now, exp: now + CERT_DAYS * 86400,
+      v: 1, lic: lic.id, sub: user.id, email: user.email ?? "", dev: deviceHash, iat: now, exp,
+      ...(isTrial ? { trial: true, trial_ends: trialEnd } : {}),
     });
   } catch (_err) {
     return fail(req, 500, "Le serveur de licences n'est pas encore configuré.", "signing");
@@ -103,7 +132,7 @@ Deno.serve(async (req) => {
   return json(req, 200, {
     ok: true,
     certificate,
-    license: { status: lic.status, created_at: lic.created_at },
+    license: publicLicense(lic),
     devices: count ?? 1,
   });
 });

@@ -1,10 +1,16 @@
 // Generates the soundtrack WAV (temp folder by default, or the path given as argument): a soft chiptune bed + UI blips synced to the storyboard.
 // Pure synthesis, zero dependencies. Usage: node video-src/soundtrack.js [out.wav]  (render.js calls it automatically)
+// Vertical clips: node video-src/soundtrack.js out.wav --music-only --duration 15 [--groove-at 6.6]
+//   -> the chiptune bed alone (no sound effects), with an optional tense drone before the groove starts.
 const fs = require('fs');
 const path = require('path');
 
-const SR = 44100, DUR = 65;
-const N = SR * DUR;
+const ARGS = process.argv.slice(2);
+const argNum = (name, def) => { const i = ARGS.indexOf('--' + name); return i < 0 ? def : parseFloat(ARGS[i + 1]); };
+const MUSIC_ONLY = ARGS.includes('--music-only');
+const GROOVE_AT = argNum('groove-at', 0);
+const SR = 44100, DUR = argNum('duration', 65);
+const N = Math.round(SR * DUR);
 const music = new Float32Array(N), sfx = new Float32Array(N);
 const midi = (m) => 440 * Math.pow(2, (m - 69) / 12);
 let seed = 12345;
@@ -41,15 +47,21 @@ function noise(buf, t0, dur, { amp = 0.1, decay = 30, lp = 0.5 } = {}) {
 // ---------- music bed ----------
 const BEAT = 0.6; // 100 BPM
 const CHORDS = [[57, 60, 64, 45], [53, 57, 60, 41], [48, 52, 55, 48], [55, 59, 62, 43]]; // Am F C G (+bass)
-// Intro tension (0 - 7 s): low drone + clock ticks
-tone(music, 0.2, 6.6, midi(33), { wave: 'tri', amp: 0.22, a: 2.5, r: 0.6 });
-tone(music, 2.4, 4.4, midi(40), { wave: 'tri', amp: 0.08, a: 1.5, r: 0.6 });
-for (let t = 0.6; t < 6.8; t += 0.3) noise(sfx, t, 0.04, { amp: 0.05 + 0.06 * (t / 7), decay: 120, lp: 0.9 });
-// riser into the title
-noise(sfx, 6.2, 1.3, { amp: 0.12, decay: -1.2, lp: 0.15 });
-tone(sfx, 6.4, 1.1, (t) => 200 + t * 700, { wave: 'square', duty: 0.25, amp: 0.035, a: 0.6, r: 0.05 });
+if (!MUSIC_ONLY) {
+  // Intro tension (0 - 7 s): low drone + clock ticks
+  tone(music, 0.2, 6.6, midi(33), { wave: 'tri', amp: 0.22, a: 2.5, r: 0.6 });
+  tone(music, 2.4, 4.4, midi(40), { wave: 'tri', amp: 0.08, a: 1.5, r: 0.6 });
+  for (let t = 0.6; t < 6.8; t += 0.3) noise(sfx, t, 0.04, { amp: 0.05 + 0.06 * (t / 7), decay: 120, lp: 0.9 });
+  // riser into the title
+  noise(sfx, 6.2, 1.3, { amp: 0.12, decay: -1.2, lp: 0.15 });
+  tone(sfx, 6.4, 1.1, (t) => 200 + t * 700, { wave: 'square', duty: 0.25, amp: 0.035, a: 0.6, r: 0.05 });
+} else if (GROOVE_AT > 1) {
+  // Short clips: the same low drone until the groove kicks in.
+  tone(music, 0.2, GROOVE_AT - 0.6, midi(33), { wave: 'tri', amp: 0.22, a: Math.min(2, GROOVE_AT / 3), r: 0.5 });
+  tone(music, GROOVE_AT * 0.35, GROOVE_AT * 0.55, midi(40), { wave: 'tri', amp: 0.08, a: 1, r: 0.5 });
+}
 // groove from the title to the end
-const START = 7.55, END = 65;
+const START = MUSIC_ONLY ? Math.max(0.05, GROOVE_AT) : 7.55, END = DUR;
 for (let bar = 0; START + bar * 4 * BEAT < END; bar++) {
   const c = CHORDS[bar % 4], t0 = START + bar * 4 * BEAT;
   for (let b = 0; b < 4; b++) {
@@ -66,9 +78,9 @@ for (let bar = 0; START + bar * 4 * BEAT < END; bar++) {
     }
   }
 }
-// ---------- sound effects synced to the storyboard ----------
-const blip = (t, notes, amp = 0.06, step = 0.05) => notes.forEach((m, i) => tone(sfx, t + i * step, step * 0.9, midi(m), { wave: 'square', duty: 0.5, amp, r: 0.03 }));
-const typing = (a, b, rate = 22) => { for (let t = a; t < b; t += 1 / rate + (rnd() - 0.5) * 0.02) noise(sfx, t, 0.02, { amp: 0.09, decay: 200, lp: 0.7 }); };
+// ---------- sound effects synced to the storyboard (explainer only) ----------
+const blip = (t, notes, amp = 0.06, step = 0.05) => { if (!MUSIC_ONLY) notes.forEach((m, i) => tone(sfx, t + i * step, step * 0.9, midi(m), { wave: 'square', duty: 0.5, amp, r: 0.03 })); };
+const typing = (a, b, rate = 22) => { if (!MUSIC_ONLY) for (let t = a; t < b; t += 1 / rate + (rnd() - 0.5) * 0.02) noise(sfx, t, 0.02, { amp: 0.09, decay: 200, lp: 0.7 }); };
 blip(7.6, [69, 72, 76, 81, 84], 0.05, 0.07); // title
 typing(12.6, 14.2); typing(14.35, 14.7);
 blip(15.0, [76], 0.04); // colour pick
@@ -91,7 +103,7 @@ for (let i = 0; i < N; i++) {
   lp += 0.35 * (music[i] - lp); // soften the square waves
   const t = i / SR;
   const fade = Math.min(1, t / 0.3) * Math.min(1, (DUR - t) / 1.6);
-  mix[i] = (lp * 0.9 + sfx[i]) * fade;
+  mix[i] = (lp * 0.9 + (MUSIC_ONLY ? 0 : sfx[i])) * fade;
   peak = Math.max(peak, Math.abs(mix[i]));
 }
 const gain = 0.5 / peak; // about -6 dBFS peak: a discreet bed

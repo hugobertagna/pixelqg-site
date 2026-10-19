@@ -10,11 +10,42 @@
     url: typeof SUPABASE_URL === 'string' ? SUPABASE_URL.trim() : '',
     key: typeof SUPABASE_ANON_KEY === 'string' ? SUPABASE_ANON_KEY.trim() : '',
     checkout: typeof CHECKOUT_URL === 'string' ? CHECKOUT_URL.trim() : '',
+    provider: typeof PAYMENT_PROVIDER === 'string' && PAYMENT_PROVIDER.trim().toLowerCase() === 'stripe' ? 'stripe' : 'lemonsqueezy',
     contact: typeof CONTACT_EMAIL === 'string' ? CONTACT_EMAIL.trim() : '',
   };
   // Accounts are "open" only once real values replace the placeholders in config.js
   // (https, or a local Supabase stack such as `supabase start` on http://127.0.0.1:54321).
   var configured = /^(https:\/\/[^\s"'<>]+|http:\/\/(127\.0\.0\.1|localhost)(:\d+)?\/?)$/.test(cfg.url) && cfg.key.length > 20 && cfg.key.indexOf('__') !== 0;
+  var paymentOpen = /^https:\/\/[^\s"'<>]+$/.test(cfg.checkout);
+  var providerName = cfg.provider === 'stripe' ? 'Stripe' : 'Lemon Squeezy';
+
+  // Checkout link tied to the signed-in account, so the payment webhook can find the licence owner.
+  function checkoutUrl(user) {
+    if (!paymentOpen || !user) return null;
+    var u = new URL(cfg.checkout);
+    if (cfg.provider === 'stripe') {
+      u.searchParams.set('client_reference_id', user.id);
+      if (user.email) u.searchParams.set('prefilled_email', user.email);
+    } else {
+      u.searchParams.set('checkout[custom][user_id]', user.id);
+      if (user.email) u.searchParams.set('checkout[email]', user.email);
+    }
+    return u.toString();
+  }
+
+  // Licence summary: paid ('active'), running trial, ended trial, revoked/refunded, or none.
+  var DAY = 86400000;
+  function licenseState(lic, now) {
+    now = now || Date.now();
+    if (!lic) return { kind: 'none' };
+    if (lic.status === 'active') return { kind: 'paid' };
+    if (lic.status === 'trial') {
+      var end = Date.parse(lic.trial_ends_at || '');
+      if (end > now) return { kind: 'trial', days: Math.max(1, Math.ceil((end - now) / DAY)), ends: end };
+      return { kind: 'trial-ended' };
+    }
+    return { kind: lic.status === 'refunded' ? 'refunded' : 'revoked' };
+  }
 
   // Small DOM builder: el('p', { class: 'x', text: 'y' }, child, 'text', ...)
   function el(tag, props) {
@@ -139,8 +170,13 @@
     return out;
   }
 
+  // Name the payment provider wherever the copy mentions it.
+  document.querySelectorAll('[data-provider-name]').forEach(function (n) { n.textContent = providerName; });
+
   window.PQG = {
-    cfg: cfg, configured: configured, client: client, el: el, clear: clear, show: show, say: say,
+    cfg: cfg, configured: configured, paymentOpen: paymentOpen, providerName: providerName,
+    checkoutUrl: checkoutUrl, licenseState: licenseState,
+    client: client, el: el, clear: clear, show: show, say: say,
     fmtDate: fmtDate, fmtDateTime: fmtDateTime, fmtSize: fmtSize,
     authMessage: authMessage, dbMessage: dbMessage, invoke: invoke,
     normaliseRepo: normaliseRepo, safeRepo: safeRepo, parseTags: parseTags, REPO_RE: REPO_RE,

@@ -14,6 +14,7 @@
 <script src="config.js"></script>
 <script src="js/main.js" defer></script>
 <script src="js/account.js" defer></script>
+<script src="js/waitlist.js" defer></script>
 <script src="js/compte.js" defer></script>
 </head>
 <body>
@@ -79,7 +80,7 @@
         <div class="field"><label for="signup-email">E-mail</label><input id="signup-email" name="email" type="email" autocomplete="email" required></div>
         <div class="field"><label for="signup-password">Mot de passe <span class="hint">(8 caractères minimum)</span></label><input id="signup-password" name="password" type="password" autocomplete="new-password" minlength="8" required></div>
         <button class="btn btn--block" type="submit">Créer mon compte</button>
-        <p class="hint">On t’envoie un e-mail pour confirmer ton adresse. Ton e-mail n’est jamais affiché publiquement.</p>
+        <p class="hint">Ton compte te donne droit à un essai gratuit de 7 jours, sans carte bancaire. On t’envoie un e-mail pour confirmer ton adresse&nbsp;; elle n’est jamais affichée publiquement.</p>
       </form>
 
       <form class="form" id="form-forgot" hidden novalidate>
@@ -170,7 +171,17 @@
       <a class="btn btn--lg" id="btn-buy" href="#acct-auth" hidden>Acheter PixelQG — 10&nbsp;€</a>
       <button type="button" class="btn btn--lg" id="btn-buy-soon" disabled hidden>Paiement bientôt disponible</button>
       <a class="btn btn--lg btn--ghost" id="btn-buy-login" href="#acct-auth" hidden>Se connecter pour acheter</a>
-      <p class="fine">Le paiement se fait chez Stripe&nbsp;: aucune donnée bancaire ne transite par ce site. Ta licence apparaît ici dès le paiement validé, avec le bouton de téléchargement. Voir les <a href="legal/cgv.html">conditions générales de vente</a>.</p>
+      <div class="waitlist" id="buy-waitlist" data-waitlist-wrap hidden>
+        <form class="waitlist__form" data-waitlist novalidate>
+          <div class="field">
+            <label for="wl-email-compte">Ton e-mail</label>
+            <input id="wl-email-compte" name="email" type="email" autocomplete="email" placeholder="ton@email.fr" maxlength="254" required>
+          </div>
+          <button class="btn" type="submit">Préviens-moi au lancement</button>
+        </form>
+        <p class="status-line" role="status" hidden></p>
+      </div>
+      <p class="fine">Essai gratuit de 7 jours, sans carte bancaire&nbsp;: il démarre tout seul à ta première connexion dans l’appli (un essai par PC). Le paiement se fait chez <span data-provider-name>notre prestataire de paiement</span>&nbsp;: aucune donnée bancaire ne transite par ce site. Ta licence apparaît ici dès le paiement validé. Voir les <a href="legal/cgv.html">conditions générales de vente</a>.</p>
     </section>
   </div>
 </main>

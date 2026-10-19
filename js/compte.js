@@ -10,29 +10,32 @@
   var state = { sb: null, user: null, license: null, renderId: 0, recovery: /type=recovery/.test(location.hash) };
 
   // ---------- purchase card ----------
+  // While payment is closed, the card offers the launch waitlist instead of a buy button.
   function setBuy(mode) {
     var text = $('buy-text');
     P.show($('btn-buy'), false); P.show($('btn-buy-soon'), false); P.show($('btn-buy-login'), false);
-    var checkout = P.cfg.checkout;
-    var hasCheckout = /^https:\/\/[^\s"'<>]+$/.test(checkout);
+    P.show($('buy-waitlist'), P.configured && !P.paymentOpen && mode !== 'owned');
     if (mode === 'soon') {
       text.textContent = 'Les comptes ouvrent très bientôt. La licence sera liée à ton compte PixelQG.';
       P.show($('btn-buy-soon'), true);
     } else if (mode === 'signedout') {
-      text.textContent = 'La licence est liée à ton compte PixelQG : crée ton compte ou connecte-toi d’abord.';
-      if (hasCheckout) P.show($('btn-buy-login'), true); else P.show($('btn-buy-soon'), true);
+      if (P.paymentOpen) {
+        text.textContent = 'La licence est liée à ton compte PixelQG : crée ton compte ou connecte-toi d’abord.';
+        P.show($('btn-buy-login'), true);
+      } else {
+        text.textContent = 'Le paiement en ligne ouvre très bientôt. En attendant, crée ton compte pour profiter de l’essai gratuit de 7 jours, et laisse ton e-mail pour être prévenu au lancement.';
+      }
     } else if (mode === 'owned') {
       text.textContent = 'Tu as déjà une licence active sur ce compte. Merci pour ton soutien !';
     } else if (mode === 'buy') {
-      if (!hasCheckout) {
-        text.textContent = 'Le paiement en ligne ouvre très bientôt. Ta licence sera liée à ce compte.';
-        P.show($('btn-buy-soon'), true);
+      if (!P.paymentOpen) {
+        text.textContent = 'Le paiement en ligne ouvre très bientôt : laisse ton e-mail pour être prévenu au lancement. Ta licence sera liée à ce compte.';
+        if (P.prefillWaitlist) P.prefillWaitlist(state.user.email);
         return;
       }
       text.textContent = 'Ta licence sera liée à ce compte (' + state.user.email + ') dès le paiement validé.';
-      var sep = checkout.indexOf('?') >= 0 ? '&' : '?';
       var a = $('btn-buy');
-      a.href = checkout + sep + 'client_reference_id=' + encodeURIComponent(state.user.id) + '&prefilled_email=' + encodeURIComponent(state.user.email || '');
+      a.href = P.checkoutUrl(state.user);
       a.rel = 'noopener';
       P.show(a, true);
     }
@@ -126,12 +129,9 @@
   }
 
   // ---------- signed-in view ----------
-  var LICENSE_LABEL = {
-    active: ['Licence active', 'ok'], revoked: ['Licence retirée', 'off'], refunded: ['Licence remboursée', 'off'],
-  };
-
   function loadLicense() {
-    return state.sb.from('licenses').select('id, status, source, created_at').eq('user_id', state.user.id).maybeSingle()
+    // select('*') keeps working whether or not the trial_ends_at column is deployed yet.
+    return state.sb.from('licenses').select('*').eq('user_id', state.user.id).maybeSingle()
       .then(function (r) { if (r.error) throw r.error; return r.data; });
   }
   function loadDevices() {
@@ -142,20 +142,23 @@
   function paintLicense(lic) {
     state.license = lic;
     var chip = $('lic-chip'), text = $('lic-text');
-    var active = lic && lic.status === 'active';
-    if (lic && LICENSE_LABEL[lic.status]) {
-      chip.textContent = LICENSE_LABEL[lic.status][0];
-      chip.dataset.tone = LICENSE_LABEL[lic.status][1];
-      text.textContent = active
-        ? 'Licence liée à ce compte depuis le ' + P.fmtDate(lic.created_at) + '. Tu peux activer PixelQG sur 3 PC.'
-        : 'Cette licence n’est plus active. Une question ? Écris-nous à ' + (P.cfg.contact || 'l’adresse de contact') + '.';
-    } else {
-      chip.textContent = 'Aucune licence';
-      chip.dataset.tone = 'warn';
-      text.textContent = 'Ce compte n’a pas encore de licence PixelQG. Achète-la ci-dessous : elle apparaîtra ici automatiquement.';
-    }
-    P.show($('btn-download'), active);
-    setBuy(active ? 'owned' : 'buy');
+    var st = P.licenseState(lic);
+    var contact = P.cfg.contact || 'l’adresse de contact';
+    var view = {
+      paid: ['Licence active', 'ok', 'Licence liée à ce compte depuis le ' + (lic && P.fmtDate(lic.created_at)) + '. Tu peux activer PixelQG sur 3 PC.'],
+      trial: ['Essai gratuit : encore ' + st.days + (st.days > 1 ? ' jours' : ' jour'), 'trial',
+        'Ton essai se termine le ' + P.fmtDate(new Date(st.ends).toISOString()) + '. Achète PixelQG pour continuer ensuite : tes réglages sont conservés.'],
+      'trial-ended': ['Essai terminé', 'off', 'Ton essai gratuit de 7 jours est terminé. Achète PixelQG pour continuer à l’utiliser.'],
+      revoked: ['Licence retirée', 'off', 'Cette licence n’est plus active. Une question ? Écris-nous à ' + contact + '.'],
+      refunded: ['Licence remboursée', 'off', 'Cette licence a été remboursée. Une question ? Écris-nous à ' + contact + '.'],
+      none: ['Aucune licence', 'warn', 'Télécharge PixelQG, lance-le et connecte-toi avec ce compte : ton essai gratuit de 7 jours démarre automatiquement (sans carte bancaire, un essai par PC).'],
+    }[st.kind];
+    chip.textContent = view[0];
+    chip.dataset.tone = view[1];
+    text.textContent = view[2];
+    // Any signed-in account can download the app: the trial starts in the app itself.
+    P.show($('btn-download'), true);
+    setBuy(st.kind === 'paid' ? 'owned' : 'buy');
   }
 
   function paintDevices(list) {
@@ -270,6 +273,11 @@
     if (!state.user) {
       P.show($('acct-thanks'), false);
       setBuy('signedout');
+      // « Essai gratuit » links land on compte.html#inscription: open the sign-up tab.
+      if (location.hash === '#inscription') {
+        showForm('signup');
+        $('acct-auth').scrollIntoView({ block: 'start' });
+      }
       return;
     }
     $('me-email').textContent = state.user.email || '';

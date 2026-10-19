@@ -680,5 +680,9 @@
     O.draw(ctx, tt, { cx: 200, cy: 125, zoom: 3, ax: 600, ay: 375 }, LOOP_AGENTS, { labelScale: 2 });
   }
 
-  root.Story = { DURATION, LOOP_DURATION, loadImages, renderMain, renderLoop };
+  root.Story = {
+    DURATION, LOOP_DURATION, loadImages, renderMain, renderLoop,
+    // shared with social.js (vertical clips)
+    ui: { stepChip, windowFrame, cursor, pill, field, label, wrap }, LOG, LOOP_AGENTS,
+  };
 })(window);

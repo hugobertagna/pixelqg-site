@@ -2,6 +2,7 @@
 //
 //   node video-src/render.js                 -> video/pixelqg-demo.mp4 + poster + og image
 //   node video-src/render.js --mode loop     -> video/hero-loop.mp4 + poster (8 s seamless loop)
+//   node video-src/render.js --mode social-a -> social/pixelqg-aveugle.mp4 (vertical 1080x1920, also social-b, social-c)
 //   node video-src/render.js --stills 3,10.9,22.5 --out some/dir   -> PNG stills only (quick check)
 //
 // Options: --workers N (parallel headless browsers, default 4), --keep (keep PNG frames), --crf N, --mute (no soundtrack)
@@ -24,9 +25,9 @@ async function openWorker(id) {
   const browser = await launch({ userDataDir: path.join(os.tmpdir(), `pixelqg-render-${process.pid}-${id}`) });
   const page = await browser.newPage();
   const url = fileUrl(path.join(__dirname, 'index.html')) + '?mode=' + MODE;
-  await page.viewport(MODE === 'loop' ? 1200 : 1920, MODE === 'loop' ? 750 : 1080);
   await page.goto(url);
   const info = await page.eval('window.ready');
+  await page.viewport(info.width, info.height);
   return { browser, page, info };
 }
 
@@ -57,7 +58,8 @@ function ffmpeg(a) { execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error
     }
 
     for (let i = 0; i < WORKERS; i++) workers.push(await openWorker(i));
-    const { fps, duration, width, height } = workers[0].info;
+    const workers0 = workers[0].info;
+    const { fps, duration, width, height } = workers0;
     const total = Math.round(duration * fps);
     fs.rmSync(FRAMES_DIR, { recursive: true, force: true });
     fs.mkdirSync(FRAMES_DIR, { recursive: true });
@@ -77,7 +79,22 @@ function ffmpeg(a) { execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error
     fs.mkdirSync(OUT_DIR, { recursive: true });
     const input = ['-framerate', String(fps), '-i', path.join(FRAMES_DIR, 'f_%05d.png')];
     const x264 = ['-c:v', 'libx264', '-preset', 'slow', '-tune', 'animation', '-pix_fmt', 'yuv420p', '-profile:v', 'high', '-movflags', '+faststart'];
-    if (MODE === 'loop') {
+    if (MODE.startsWith('social-')) {
+      // Vertical clip: music bed only (no sound effects, no voice), kept out of the deployed site.
+      const socialDir = path.join(ROOT, 'social');
+      fs.mkdirSync(socialDir, { recursive: true });
+      const audio = path.join(os.tmpdir(), `pixelqg-music-${MODE}.wav`);
+      const withAudio = [];
+      if (!opt('mute', false)) {
+        execFileSync(process.execPath, [path.join(__dirname, 'soundtrack.js'), audio, '--music-only', '--duration', String(duration), '--groove-at', String(workers0.grooveAt || 0)], { stdio: 'inherit', windowsHide: true });
+        withAudio.push('-i', audio, '-c:a', 'aac', '-b:a', '128k', '-shortest');
+      }
+      const base = path.join(socialDir, 'pixelqg-' + workers0.name);
+      ffmpeg([...input, ...withAudio, ...x264, '-crf', String(opt('crf', '20')), base + '.mp4']);
+      const posterFrame = path.join(FRAMES_DIR, `f_${String(Math.round(workers0.posterAt * fps)).padStart(5, '0')}.png`);
+      ffmpeg(['-i', posterFrame, '-q:v', '3', base + '.jpg']);
+      for (const f of fs.readdirSync(socialDir)) console.log(`social/${f}  ${(fs.statSync(path.join(socialDir, f)).size / 1048576).toFixed(2)} MB`);
+    } else if (MODE === 'loop') {
       ffmpeg([...input, ...x264, '-crf', String(opt('crf', '23')), path.join(OUT_DIR, 'hero-loop.mp4')]);
       ffmpeg(['-i', path.join(FRAMES_DIR, 'f_00000.png'), '-c:v', 'libwebp', '-quality', '88', path.join(OUT_DIR, 'hero-loop-poster.webp')]);
     } else {

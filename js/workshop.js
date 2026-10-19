@@ -246,7 +246,9 @@
     P.show($('ws-publish-btn'), state.licensed);
     if (state.licensed) { P.show(gate, false); return; }
     $('ws-gate-text').textContent = state.user
-      ? 'Publier et commenter est réservé aux membres qui ont une licence PixelQG.'
+      ? (state.trial
+        ? 'Pendant l’essai gratuit, tu peux parcourir le Workshop. Publier et commenter est réservé aux licences payées.'
+        : 'Publier et commenter est réservé aux membres qui ont une licence PixelQG.')
       : 'Pour publier un skill ou commenter, connecte-toi avec un compte qui a une licence PixelQG.';
     link.textContent = state.user ? 'Acheter PixelQG — 10 €' : 'Se connecter';
     link.href = state.user ? 'compte.html#acheter' : 'compte.html';
@@ -271,7 +273,9 @@
       state.sb.from('licenses').select('status').eq('user_id', state.user.id).maybeSingle(),
       state.sb.from('profiles').select('is_admin').eq('id', state.user.id).maybeSingle(),
     ]).then(function (res) {
+      // The Workshop is for paid licences only: a running trial can read but not publish.
       state.licensed = !!(res[0].data && res[0].data.status === 'active');
+      state.trial = !!(res[0].data && res[0].data.status === 'trial');
       state.admin = !!(res[1].data && res[1].data.is_admin);
     });
   }

@@ -342,7 +342,7 @@
     if (cam.spot && cam.spot.a > 0.01) {
       const [sx, sy] = S(cam.spot.x, cam.spot.y);
       ctx.fillStyle = `rgba(5,6,14,${cam.spot.a})`;
-      ctx.beginPath(); ctx.rect(-10, -10, 1940, 1100); ctx.rect(sx, sy, cam.spot.w * z, cam.spot.h * z); ctx.fill('evenodd');
+      ctx.beginPath(); ctx.rect(-10, -10, ctx.canvas.width + 20, ctx.canvas.height + 20); ctx.rect(sx, sy, cam.spot.w * z, cam.spot.h * z); ctx.fill('evenodd');
     }
     if (opts.labels !== false) {
       const ls = opts.labelScale || (z >= 6 ? 3 : 2);

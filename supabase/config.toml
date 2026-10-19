@@ -11,3 +11,6 @@ verify_jwt = true
 # Stripe signs its own requests; there is no Supabase JWT on them.
 [functions.stripe-webhook]
 verify_jwt = false
+
+[functions.lemonsqueezy-webhook]
+verify_jwt = false

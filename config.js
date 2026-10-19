@@ -2,13 +2,26 @@
  *  PixelQG — RÉGLAGES DU SITE  (c'est le seul fichier à modifier)
  * ==========================================================================
  *
- *  CHECKOUT_URL : lien de paiement Stripe (Payment Link), par exemple
- *    "https://buy.stripe.com/xxxxxxxxxxxx". Le bouton « Acheter » de la page
- *    Mon compte y ajoute l'identifiant du compte connecté, pour que la licence
- *    soit attribuée automatiquement après le paiement.
- *    Le site ne collecte jamais de données bancaires : le paiement se fait chez Stripe.
- *    Tant que la valeur est vide, la page affiche « Paiement bientôt disponible ».
+ *  PAYMENT_PROVIDER : "lemonsqueezy" ou "stripe".
+ *    - Lemon Squeezy est un « merchant of record » : c'est lui le vendeur
+ *      officiel aux yeux du client. Il encaisse, facture et reverse la TVA
+ *      européenne de chaque pays à ta place (pas de déclaration OSS à faire),
+ *      puis te verse le reste. Recommandé pour vendre seul dans toute l'UE.
+ *    - Stripe : tu restes le vendeur, donc la TVA et les factures sont à ta charge.
+ *
+ *  CHECKOUT_URL : lien de paiement du produit PixelQG, par exemple
+ *    - Lemon Squeezy : "https://ton-shop.lemonsqueezy.com/buy/xxxxxxxx"
+ *    - Stripe (Payment Link) : "https://buy.stripe.com/xxxxxxxxxxxx"
+ *    Le bouton « Acheter » de la page Mon compte y ajoute l'identifiant et l'e-mail
+ *    du compte connecté (Lemon Squeezy : checkout[custom][user_id] et checkout[email] ;
+ *    Stripe : client_reference_id et prefilled_email), pour que la licence soit
+ *    attribuée automatiquement après le paiement. Règle la redirection après achat
+ *    sur https://pixelqg-site.pages.dev/compte.html?achat=ok
+ *    Le site ne collecte jamais de données bancaires.
+ *    Tant que CHECKOUT_URL est vide, les zones « Acheter » proposent
+ *    « Préviens-moi au lancement » (liste d'attente).
  */
+const PAYMENT_PROVIDER = "lemonsqueezy";
 const CHECKOUT_URL = "";
 
 /*  CONTACT_EMAIL : adresse affichée dans le pied de page et les pages légales.  */
