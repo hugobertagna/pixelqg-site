@@ -2,22 +2,7 @@
 (function () {
   'use strict';
 
-  // ---- Buy buttons: all point to CHECKOUT_URL from config.js ----
-  var checkout = typeof CHECKOUT_URL === 'string' ? CHECKOUT_URL.trim() : '';
-  var validCheckout = /^https:\/\/[^\s"'<>]+$/i.test(checkout);
-  var note = document.getElementById('buy-note');
-  document.querySelectorAll('[data-buy]').forEach(function (a) {
-    if (validCheckout) {
-      a.href = checkout;
-      a.rel = 'noopener';
-    } else {
-      // No payment link yet: go to the pricing card and say so inline (no popup).
-      a.href = '#prix';
-      a.addEventListener('click', function () {
-        if (note) note.hidden = false;
-      });
-    }
-  });
+  // Buy buttons link to compte.html#acheter in the HTML: the purchase is tied to an account there.
 
   // ---- Contact link from CONTACT_EMAIL (falls back to legal/contact.html) ----
   var email = typeof CONTACT_EMAIL === 'string' ? CONTACT_EMAIL.trim() : '';

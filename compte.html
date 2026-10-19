@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mon compte — PixelQG</title>
+<meta name="description" content="Ton compte PixelQG : licence, PC activés, téléchargement de l’application et achat.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0a0c19">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="css/style.css">
+<script src="config.js"></script>
+<script src="js/main.js" defer></script>
+<script src="js/account.js" defer></script>
+<script src="js/compte.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#contenu">Aller au contenu</a>
+
+<header class="nav">
+  <div class="wrap nav__in">
+    <a class="logo" href="index.html" aria-label="PixelQG — accueil">
+      <img class="px" src="images/bot-cyan.png" width="24" height="30" alt="">
+      <span class="logo__txt" aria-hidden="true">PIXEL<span>QG</span></span>
+    </a>
+    <nav class="nav__nav" aria-label="Navigation principale">
+      <ul class="nav__links">
+        <li><a href="index.html#comment">Comment ça marche</a></li>
+        <li><a href="index.html#fonctions">Fonctionnalités</a></li>
+        <li><a href="index.html#salles">Les salles</a></li>
+        <li><a href="index.html#faq">FAQ</a></li>
+      </ul>
+      <ul class="nav__site">
+        <li><a href="workshop.html">Workshop</a></li>
+        <li><a href="compte.html" aria-current="page">Mon compte</a></li>
+      </ul>
+    </nav>
+    <a class="btn btn--sm nav__buy" href="compte.html#acheter">Acheter · 10&nbsp;€</a>
+  </div>
+</header>
+
+<main id="contenu" class="acct">
+  <div class="wrap wrap--acct">
+    <p class="sign" style="--c: var(--cyan)" aria-hidden="true">Accueil</p>
+    <h1 class="h2">Mon compte</h1>
+    <p class="sub">Ton compte PixelQG regroupe ta licence, tes PC activés et le téléchargement de l’application.</p>
+    <p class="status-line" id="acct-status" role="status" hidden></p>
+
+    <!-- Accounts not configured yet -->
+    <section class="panel panel--soon" id="acct-soon" hidden aria-labelledby="soon-title">
+      <div class="soon-bots" aria-hidden="true">
+        <img class="px" src="images/bot-cyan.png" width="12" height="15" alt="">
+        <img class="px" src="images/bot-amber.png" width="12" height="15" alt="">
+        <img class="px" src="images/bot-pink.png" width="12" height="15" alt="">
+      </div>
+      <h2 id="soon-title" class="h3">Les comptes ouvrent très bientôt</h2>
+      <p>On termine les derniers réglages. Très vite, tu pourras créer ton compte ici, acheter ta licence et télécharger PixelQG.</p>
+      <p>Une question d’ici là&nbsp;? Écris-nous à <a data-contact data-contact-text href="mailto:pro.hugobertagna@gmail.com">pro.hugobertagna@gmail.com</a>.</p>
+    </section>
+
+    <!-- Signed out: sign in / sign up / forgot password / new password -->
+    <section class="panel auth" id="acct-auth" hidden aria-labelledby="auth-title">
+      <h2 id="auth-title" class="h3">Connexion</h2>
+      <div class="tabs" role="tablist" aria-label="Se connecter ou créer un compte">
+        <button type="button" class="tab" role="tab" id="tab-login" aria-selected="true" aria-controls="form-login">Se connecter</button>
+        <button type="button" class="tab" role="tab" id="tab-signup" aria-selected="false" aria-controls="form-signup" tabindex="-1">Créer un compte</button>
+      </div>
+
+      <form class="form" id="form-login" role="tabpanel" aria-labelledby="tab-login" novalidate>
+        <div class="field"><label for="login-email">E-mail</label><input id="login-email" name="email" type="email" autocomplete="email" required></div>
+        <div class="field"><label for="login-password">Mot de passe</label><input id="login-password" name="password" type="password" autocomplete="current-password" required></div>
+        <button class="btn btn--block" type="submit">Se connecter</button>
+        <button class="link-btn" type="button" data-show="forgot">Mot de passe oublié&nbsp;?</button>
+      </form>
+
+      <form class="form" id="form-signup" role="tabpanel" aria-labelledby="tab-signup" hidden novalidate>
+        <div class="field"><label for="signup-email">E-mail</label><input id="signup-email" name="email" type="email" autocomplete="email" required></div>
+        <div class="field"><label for="signup-password">Mot de passe <span class="hint">(8 caractères minimum)</span></label><input id="signup-password" name="password" type="password" autocomplete="new-password" minlength="8" required></div>
+        <button class="btn btn--block" type="submit">Créer mon compte</button>
+        <p class="hint">On t’envoie un e-mail pour confirmer ton adresse. Ton e-mail n’est jamais affiché publiquement.</p>
+      </form>
+
+      <form class="form" id="form-forgot" hidden novalidate>
+        <p>Indique l’e-mail de ton compte&nbsp;: on t’envoie un lien pour choisir un nouveau mot de passe.</p>
+        <div class="field"><label for="forgot-email">E-mail</label><input id="forgot-email" name="email" type="email" autocomplete="email" required></div>
+        <button class="btn btn--block" type="submit">Recevoir le lien</button>
+        <button class="link-btn" type="button" data-show="login">Retour à la connexion</button>
+      </form>
+
+      <form class="form" id="form-reset" hidden novalidate>
+        <p>Choisis ton nouveau mot de passe.</p>
+        <div class="field"><label for="reset-password">Nouveau mot de passe <span class="hint">(8 caractères minimum)</span></label><input id="reset-password" name="password" type="password" autocomplete="new-password" minlength="8" required></div>
+        <button class="btn btn--block" type="submit">Enregistrer le mot de passe</button>
+      </form>
+
+      <p class="status-line" id="auth-status" role="status" hidden></p>
+    </section>
+
+    <!-- Signed in -->
+    <section id="acct-me" hidden aria-label="Mon espace">
+      <div class="panel me-head">
+        <div>
+          <p class="me-hello">Bonjour, <span id="me-name"></span></p>
+          <p class="me-mail" id="me-email"></p>
+        </div>
+        <button type="button" class="btn btn--sm btn--ghost" id="btn-logout">Se déconnecter</button>
+      </div>
+
+      <section class="panel celebrate" id="acct-thanks" hidden aria-labelledby="thanks-title">
+        <div class="soon-bots" aria-hidden="true">
+          <img class="px" src="images/bot-green.png" width="12" height="15" alt="">
+          <img class="px" src="images/bot-amber.png" width="12" height="15" alt="">
+          <img class="px" src="images/bot-blue.png" width="12" height="15" alt="">
+          <img class="px" src="images/bot-pink.png" width="12" height="15" alt="">
+        </div>
+        <h2 id="thanks-title" class="h3">Merci&nbsp;! Ta licence est active.</h2>
+        <p>Télécharge PixelQG ci-dessous, lance-le et connecte-toi avec ce compte&nbsp;: ton QG t’attend.</p>
+      </section>
+
+      <div class="acct-grid">
+        <section class="panel" aria-labelledby="lic-title">
+          <h2 id="lic-title" class="h3">Ma licence</h2>
+          <p class="chip" id="lic-chip"></p>
+          <p id="lic-text"></p>
+          <button type="button" class="btn btn--lg btn--block" id="btn-download" hidden>Télécharger PixelQG</button>
+          <p class="status-line" id="dl-status" role="status" hidden></p>
+          <h3 class="h4 dev-title">Mes PC <span class="dev-count" id="dev-count"></span></h3>
+          <ul class="dev-list" id="dev-list"></ul>
+          <p class="hint" id="dev-empty">Aucun PC activé pour l’instant. Lance PixelQG et connecte-toi avec ce compte pour activer ton PC (3 au maximum).</p>
+          <p class="status-line" id="dev-status" role="status" hidden></p>
+        </section>
+
+        <section class="panel" aria-labelledby="prof-title">
+          <h2 id="prof-title" class="h3">Mon profil</h2>
+          <form class="form" id="form-name" novalidate>
+            <div class="field">
+              <label for="display-name">Nom affiché dans le Workshop</label>
+              <input id="display-name" name="display_name" type="text" maxlength="40" autocomplete="nickname" placeholder="Membre">
+            </div>
+            <button class="btn btn--sm" type="submit">Enregistrer</button>
+          </form>
+          <p class="hint">C’est le seul nom que les autres membres voient. Laisse vide pour apparaître comme «&nbsp;Membre&nbsp;».</p>
+          <p class="status-line" id="name-status" role="status" hidden></p>
+        </section>
+      </div>
+
+      <section class="panel panel--admin" id="admin" hidden aria-labelledby="admin-title">
+        <h2 id="admin-title" class="h3">Attribuer une licence</h2>
+        <p class="hint">Réservé aux administrateurs. Le compte doit déjà exister.</p>
+        <form class="form form--inline" id="form-admin" novalidate>
+          <div class="field"><label for="admin-email">E-mail du compte</label><input id="admin-email" name="email" type="email" autocomplete="off" required></div>
+          <div class="btn-row">
+            <button class="btn btn--sm" type="submit" value="grant">Attribuer</button>
+            <button class="btn btn--sm btn--danger" type="submit" value="revoke">Retirer</button>
+          </div>
+        </form>
+        <p class="status-line" id="admin-status" role="status" hidden></p>
+      </section>
+    </section>
+
+    <!-- Buy (always present for the #acheter anchor) -->
+    <section class="panel buy" id="acheter" aria-labelledby="buy-title">
+      <div class="buy__head">
+        <h2 id="buy-title" class="h3">Acheter PixelQG</h2>
+        <p class="buy__price"><span class="price__amount">10&nbsp;€</span><span class="price__note">paiement unique</span></p>
+      </div>
+      <p id="buy-text">La licence est liée à ton compte PixelQG&nbsp;: crée ton compte ou connecte-toi d’abord.</p>
+      <a class="btn btn--lg" id="btn-buy" href="#acct-auth" hidden>Acheter PixelQG — 10&nbsp;€</a>
+      <button type="button" class="btn btn--lg" id="btn-buy-soon" disabled hidden>Paiement bientôt disponible</button>
+      <a class="btn btn--lg btn--ghost" id="btn-buy-login" href="#acct-auth" hidden>Se connecter pour acheter</a>
+      <p class="fine">Le paiement se fait chez Stripe&nbsp;: aucune donnée bancaire ne transite par ce site. Ta licence apparaît ici dès le paiement validé, avec le bouton de téléchargement. Voir les <a href="legal/cgv.html">conditions générales de vente</a>.</p>
+    </section>
+  </div>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__in">
+    <a class="logo" href="index.html" aria-label="PixelQG — accueil">
+      <img class="px" src="images/bot-cyan.png" width="24" height="30" alt="">
+      <span class="logo__txt" aria-hidden="true">PIXEL<span>QG</span></span>
+    </a>
+    <nav aria-label="Liens du site">
+      <ul class="foot__links">
+        <li><a href="workshop.html">Workshop</a></li>
+        <li><a href="compte.html">Mon compte</a></li>
+        <li><a href="legal/mentions-legales.html">Mentions légales</a></li>
+        <li><a href="legal/cgv.html">CGV</a></li>
+        <li><a href="legal/contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <p class="foot__mail">Contact&nbsp;: <a data-contact data-contact-text href="mailto:pro.hugobertagna@gmail.com">pro.hugobertagna@gmail.com</a></p>
+    <p class="foot__legal">PixelQG n’est pas affilié à Anthropic. Claude et Claude Code sont des marques d’Anthropic.</p>
+    <p class="foot__copy">© <span data-year>2026</span> PixelQG</p>
+  </div>
+</footer>
+</body>
+</html>

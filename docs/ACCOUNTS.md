@@ -38,7 +38,7 @@ workshop_comments(id uuid pk default gen_random_uuid(), item_id uuid not null �
 - Trigger `on auth.users insert` → insert profiles(id, email) (security definer function, search_path fixed).
 - `public.has_active_license(uid uuid) returns boolean` security definer stable: exists active license for uid.
 - `public.is_admin(uid uuid) returns boolean` security definer stable.
-- View for the Workshop listing with the author's display name: `workshop_public` (security_invoker) joining
+- View for the Workshop listing with the author's display name: `workshop_public` (runs with its owner's rights on purpose, exposes only published rows and display names) joining
   published items with `profiles.display_name` (fallback « Membre »). Never expose emails publicly.
 
 ### RLS (aucune écriture client sur licenses/devices : seulement les Edge Functions avec la clé service)

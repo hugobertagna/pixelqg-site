@@ -10,30 +10,48 @@
 <script src="../js/main.js" defer></script>
 </head>
 <body>
+<a class="skip" href="#contenu">Aller au contenu</a>
 <header class="nav">
   <div class="wrap nav__in">
-    <a class="logo" href="../index.html" aria-label="PixelQG — retour à l’accueil">
+    <a class="logo" href="../index.html" aria-label="PixelQG — accueil">
       <img class="px" src="../images/bot-cyan.png" width="24" height="30" alt="">
       <span class="logo__txt" aria-hidden="true">PIXEL<span>QG</span></span>
     </a>
-    <a class="btn btn--sm btn--ghost" href="../index.html">Retour au site</a>
+    <nav class="nav__nav" aria-label="Navigation principale">
+      <ul class="nav__links">
+        <li><a href="../index.html#comment">Comment ça marche</a></li>
+        <li><a href="../index.html#fonctions">Fonctionnalités</a></li>
+        <li><a href="../index.html#salles">Les salles</a></li>
+        <li><a href="../index.html#faq">FAQ</a></li>
+      </ul>
+      <ul class="nav__site">
+        <li><a href="../workshop.html">Workshop</a></li>
+        <li><a href="../compte.html">Mon compte</a></li>
+      </ul>
+    </nav>
+    <a class="btn btn--sm nav__buy" href="../compte.html#acheter">Acheter · 10&nbsp;€</a>
   </div>
 </header>
-<main class="legal">
+<main id="contenu" class="legal">
   <div class="wrap wrap--narrow">
     <h1>Contact</h1>
     <p>Une question avant d’acheter, un souci d’installation, une idée de salle pour le QG&nbsp;? Écris-nous&nbsp;:</p>
-    <p><a class="btn btn--lg" data-contact data-contact-text href="#">Adresse de contact bientôt disponible</a></p>
-    <p class="todo" data-contact-todo><strong>À compléter&nbsp;:</strong> renseigne <code>CONTACT_EMAIL</code> dans <code>config.js</code>, et cette page affichera ton adresse automatiquement.</p>
+    <p><a class="btn btn--lg contact-mail" data-contact data-contact-text href="mailto:pro.hugobertagna@gmail.com">pro.hugobertagna@gmail.com</a></p>
+    <p>Pour une question sur ta licence ou tes PC activés, écris depuis l’adresse e-mail de ton compte PixelQG&nbsp;: on te répondra plus vite.</p>
   </div>
 </main>
 <footer class="foot">
   <div class="wrap foot__in">
-    <ul class="foot__links">
-      <li><a href="mentions-legales.html">Mentions légales</a></li>
-      <li><a href="cgv.html">CGV</a></li>
-      <li><a href="contact.html" aria-current="page">Contact</a></li>
-    </ul>
+    <nav aria-label="Liens du site">
+      <ul class="foot__links">
+        <li><a href="../workshop.html">Workshop</a></li>
+        <li><a href="../compte.html">Mon compte</a></li>
+        <li><a href="mentions-legales.html">Mentions légales</a></li>
+        <li><a href="cgv.html">CGV</a></li>
+        <li><a href="contact.html" aria-current="page">Contact</a></li>
+      </ul>
+    </nav>
+    <p class="foot__mail">Contact&nbsp;: <a data-contact data-contact-text href="mailto:pro.hugobertagna@gmail.com">pro.hugobertagna@gmail.com</a></p>
     <p class="foot__legal">PixelQG n’est pas affilié à Anthropic. Claude et Claude Code sont des marques d’Anthropic.</p>
   </div>
 </footer>

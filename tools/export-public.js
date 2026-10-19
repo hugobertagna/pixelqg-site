@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const ROOT = path.join(__dirname, '..');
 const DIST = path.join(ROOT, 'dist');
-const PUBLIC = ['index.html', 'config.js', 'favicon.png', 'apple-touch-icon.png', 'css', 'js', 'fonts', 'images', 'video', 'legal'];
+const PUBLIC = ['index.html', 'compte.html', 'workshop.html', 'config.js', 'favicon.png', 'apple-touch-icon.png', 'css', 'js', 'fonts', 'images', 'video', 'legal'];
 fs.rmSync(DIST, { recursive: true, force: true });
 for (const p of PUBLIC) fs.cpSync(path.join(ROOT, p), path.join(DIST, p), { recursive: true });
 let total = 0;

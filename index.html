@@ -29,15 +29,19 @@
       <img class="px" src="images/bot-cyan.png" width="24" height="30" alt="">
       <span class="logo__txt" aria-hidden="true">PIXEL<span>QG</span></span>
     </a>
-    <nav aria-label="Navigation principale">
+    <nav class="nav__nav" aria-label="Navigation principale">
       <ul class="nav__links">
         <li><a href="#comment">Comment ça marche</a></li>
         <li><a href="#fonctions">Fonctionnalités</a></li>
         <li><a href="#salles">Les salles</a></li>
         <li><a href="#faq">FAQ</a></li>
       </ul>
+      <ul class="nav__site">
+        <li><a href="workshop.html">Workshop</a></li>
+        <li><a href="compte.html">Mon compte</a></li>
+      </ul>
     </nav>
-    <a class="btn btn--sm" data-buy href="#prix">Acheter · 10&nbsp;€</a>
+    <a class="btn btn--sm nav__buy" data-buy href="compte.html#acheter">Acheter · 10&nbsp;€</a>
   </div>
 </header>
 
@@ -50,7 +54,7 @@
     <h1 id="hero-titre" class="h1">Tes agents IA ont enfin un <span class="hl">bureau</span>.</h1>
     <p class="lead">PixelQG transforme chaque agent Claude Code en petit personnage qui vit dans un QG en pixel art. Il lit à la bibliothèque, lance ses commandes en salle serveurs, délègue en salle de réunion… et toi, tu vois tout en direct&nbsp;: qui fait quoi, depuis combien de temps, et combien ça coûte.</p>
     <div class="cta">
-      <a class="btn btn--lg" data-buy href="#prix">Acheter PixelQG — 10&nbsp;€</a>
+      <a class="btn btn--lg" data-buy href="compte.html#acheter">Acheter PixelQG — 10&nbsp;€</a>
       <a class="btn btn--lg btn--ghost" href="#demo"><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 0h1v1H1zM1 1h2v1H1zM1 2h3v1H1zM1 3h4v1H1zM1 4h3v1H1zM1 5h2v1H1zM1 6h1v1H1z"/></svg>Voir la démo (1&nbsp;min)</a>
     </div>
     <ul class="ticks">
@@ -275,9 +279,8 @@
           <li><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M7 1h1v1H7zM6 2h2v1H6zM0 3h1v1H0zM5 3h2v1H5zM0 4h2v1H0zM4 4h2v1H4zM1 5h4v1H1zM2 6h2v1H2z"/></svg>Une licence personnelle, sans abonnement PixelQG</li>
         </ul>
         <p class="excl"><svg class="ico" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 1h2v1H1zM5 1h2v1H5zM2 2h4v1H2zM3 3h2v1H3zM2 4h4v1H2zM1 5h2v1H1zM5 5h2v1H5z"/></svg><span><strong>Non inclus&nbsp;:</strong> l’abonnement ou les crédits Anthropic nécessaires à Claude Code, facturés séparément par Anthropic.</span></p>
-        <a class="btn btn--lg btn--block" data-buy href="#prix">Acheter maintenant — 10&nbsp;€</a>
-        <p class="buy-note" id="buy-note" role="status" hidden>La vente ouvre très bientôt&nbsp;! Le bouton de paiement sera actif dans quelques jours.</p>
-        <p class="fine">Le paiement se fait chez notre prestataire de paiement sécurisé&nbsp;: aucune donnée bancaire ne transite par ce site. Tu reçois ton lien de téléchargement juste après l’achat. Voir les <a href="legal/cgv.html">conditions générales de vente</a>.</p>
+        <a class="btn btn--lg btn--block" data-buy href="compte.html#acheter">Acheter maintenant — 10&nbsp;€</a>
+        <p class="fine">L’achat se fait depuis ton compte PixelQG&nbsp;: la licence y est liée et tu y télécharges l’application. Le paiement se fait chez Stripe, aucune donnée bancaire ne transite par ce site. Voir les <a href="legal/cgv.html">conditions générales de vente</a>.</p>
       </div>
     </div>
   </div>
@@ -353,7 +356,7 @@
   <div class="wrap">
     <h2 id="final-titre" class="h2">Prêt à ouvrir ton QG&nbsp;?</h2>
     <p class="sub">10&nbsp;€ une fois, et tes agents emménagent.</p>
-    <a class="btn btn--lg" data-buy href="#prix">Acheter PixelQG — 10&nbsp;€</a>
+    <a class="btn btn--lg" data-buy href="compte.html#acheter">Acheter PixelQG — 10&nbsp;€</a>
   </div>
   <div class="parade" aria-hidden="true">
     <img class="px" src="images/bot-blue.png" width="12" height="15" alt="">
@@ -374,13 +377,16 @@
       <img class="px" src="images/bot-cyan.png" width="24" height="30" alt="">
       <span class="logo__txt" aria-hidden="true">PIXEL<span>QG</span></span>
     </a>
-    <nav aria-label="Informations légales">
+    <nav aria-label="Liens du site">
       <ul class="foot__links">
+        <li><a href="workshop.html">Workshop</a></li>
+        <li><a href="compte.html">Mon compte</a></li>
         <li><a href="legal/mentions-legales.html">Mentions légales</a></li>
         <li><a href="legal/cgv.html">CGV</a></li>
-        <li><a href="legal/contact.html" data-contact>Contact</a></li>
+        <li><a href="legal/contact.html">Contact</a></li>
       </ul>
     </nav>
+    <p class="foot__mail">Contact&nbsp;: <a data-contact data-contact-text href="mailto:pro.hugobertagna@gmail.com">pro.hugobertagna@gmail.com</a></p>
     <p class="foot__legal">PixelQG n’est pas affilié à Anthropic. Claude et Claude Code sont des marques d’Anthropic.</p>
     <p class="foot__copy">© <span data-year>2026</span> PixelQG</p>
   </div>

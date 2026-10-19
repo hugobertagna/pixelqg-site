@@ -11,16 +11,29 @@
 <script src="../js/main.js" defer></script>
 </head>
 <body>
+<a class="skip" href="#contenu">Aller au contenu</a>
 <header class="nav">
   <div class="wrap nav__in">
-    <a class="logo" href="../index.html" aria-label="PixelQG — retour à l’accueil">
+    <a class="logo" href="../index.html" aria-label="PixelQG — accueil">
       <img class="px" src="../images/bot-cyan.png" width="24" height="30" alt="">
       <span class="logo__txt" aria-hidden="true">PIXEL<span>QG</span></span>
     </a>
-    <a class="btn btn--sm btn--ghost" href="../index.html">Retour au site</a>
+    <nav class="nav__nav" aria-label="Navigation principale">
+      <ul class="nav__links">
+        <li><a href="../index.html#comment">Comment ça marche</a></li>
+        <li><a href="../index.html#fonctions">Fonctionnalités</a></li>
+        <li><a href="../index.html#salles">Les salles</a></li>
+        <li><a href="../index.html#faq">FAQ</a></li>
+      </ul>
+      <ul class="nav__site">
+        <li><a href="../workshop.html">Workshop</a></li>
+        <li><a href="../compte.html">Mon compte</a></li>
+      </ul>
+    </nav>
+    <a class="btn btn--sm nav__buy" href="../compte.html#acheter">Acheter · 10&nbsp;€</a>
   </div>
 </header>
-<main class="legal">
+<main id="contenu" class="legal">
   <div class="wrap wrap--narrow">
     <h1>Mentions légales</h1>
     <p class="todo"><strong>Modèle à compléter.</strong> Remplace chaque champ <span class="fill">[entre crochets]</span> avant la mise en ligne. Ce modèle n’est pas un conseil juridique&nbsp;: fais-le relire si tu as un doute.</p>
@@ -29,7 +42,7 @@
     <p><span class="fill">[Prénom Nom ou nom de l’entreprise]</span><br>
     Statut&nbsp;: <span class="fill">[ex. entrepreneur individuel (micro-entreprise)]</span> — SIREN&nbsp;: <span class="fill">[numéro]</span><br>
     Adresse&nbsp;: <span class="fill">[adresse postale]</span><br>
-    E-mail&nbsp;: <span class="fill">[adresse de contact]</span><br>
+    E-mail&nbsp;: <a href="mailto:pro.hugobertagna@gmail.com">pro.hugobertagna@gmail.com</a><br>
     Directeur de la publication&nbsp;: <span class="fill">[Prénom Nom]</span></p>
 
     <h2 class="h3">Hébergement</h2>
@@ -44,16 +57,23 @@
     <p>PixelQG n’est pas affilié à Anthropic. Claude et Claude Code sont des marques d’Anthropic. Les autres noms cités appartiennent à leurs propriétaires respectifs.</p>
 
     <h2 class="h3">Données personnelles et cookies</h2>
-    <p>Ce site ne dépose aucun cookie, n’utilise aucun outil de mesure d’audience et ne charge aucune ressource externe. Le paiement est traité par <span class="fill">[nom du prestataire de paiement]</span>, qui applique sa propre politique de confidentialité. Pour toute question sur tes données&nbsp;: <span class="fill">[adresse de contact]</span>.</p>
+    <p>Ce site ne dépose aucun cookie publicitaire et n’utilise aucun outil de mesure d’audience.</p>
+    <p>Les pages «&nbsp;Mon compte&nbsp;» et «&nbsp;Workshop&nbsp;» utilisent <strong>Supabase</strong> (base de données et connexion, <span class="fill">[région d’hébergement du projet Supabase]</span>) et chargent sa bibliothèque depuis le service jsDelivr. Ta session de connexion est gardée dans le stockage local de ton navigateur. Données conservées&nbsp;: ton e-mail, ton nom affiché, ta licence, un identifiant technique de chaque PC activé (3 au maximum), et ce que tu publies ou commentes dans le Workshop. Ton e-mail n’est jamais affiché publiquement.</p>
+    <p>Le paiement est traité par <span class="fill">[Stripe]</span>, qui applique sa propre politique de confidentialité. Pour consulter, corriger ou supprimer tes données&nbsp;: <a href="mailto:pro.hugobertagna@gmail.com">pro.hugobertagna@gmail.com</a>.</p>
   </div>
 </main>
 <footer class="foot">
   <div class="wrap foot__in">
-    <ul class="foot__links">
-      <li><a href="mentions-legales.html" aria-current="page">Mentions légales</a></li>
-      <li><a href="cgv.html">CGV</a></li>
-      <li><a href="contact.html" data-contact>Contact</a></li>
-    </ul>
+    <nav aria-label="Liens du site">
+      <ul class="foot__links">
+        <li><a href="../workshop.html">Workshop</a></li>
+        <li><a href="../compte.html">Mon compte</a></li>
+        <li><a href="mentions-legales.html" aria-current="page">Mentions légales</a></li>
+        <li><a href="cgv.html">CGV</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <p class="foot__mail">Contact&nbsp;: <a data-contact data-contact-text href="mailto:pro.hugobertagna@gmail.com">pro.hugobertagna@gmail.com</a></p>
     <p class="foot__legal">PixelQG n’est pas affilié à Anthropic. Claude et Claude Code sont des marques d’Anthropic.</p>
   </div>
 </footer>

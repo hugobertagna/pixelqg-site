@@ -115,6 +115,13 @@ as $$
     and exists (select 1 from public.licenses l where l.user_id = uid and l.status = 'active');
 $$;
 
+-- Trigger functions must not be callable through /rest/v1/rpc; has_active_license is only needed by
+-- signed-in policies. is_admin stays executable by anon because the Workshop select policies
+-- evaluate it for visitors (it answers false without a session).
+revoke execute on function public.handle_new_user() from public, anon, authenticated;
+revoke execute on function public.handle_user_email_change() from public, anon, authenticated;
+revoke execute on function public.has_active_license(uuid) from public, anon;
+
 -- ------------------------------------------------------------------ Workshop
 create table public.workshop_items (
   id uuid primary key default gen_random_uuid(),
