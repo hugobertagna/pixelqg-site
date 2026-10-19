@@ -30,6 +30,57 @@
   // ---- Footer year ----
   document.querySelectorAll('[data-year]').forEach(function (el) { el.textContent = String(new Date().getFullYear()); });
 
+  // ---- Demo video: download it fully, then play from memory ----
+  // The static host answers without byte ranges, so a streamed MP4 cannot be scrubbed
+  // (no going back). A local blob URL can be seeked freely in every direction.
+  var demo = document.querySelector('.win--video video');
+  if (demo && window.fetch && window.Blob && window.URL && URL.createObjectURL) {
+    var source = demo.querySelector('source');
+    var demoUrl = source ? source.getAttribute('src') : demo.getAttribute('src');
+    if (demoUrl) {
+      if (source) source.parentNode.removeChild(source);
+      demo.removeAttribute('src');
+      demo.controls = false;
+      demo.load();
+      var play = document.createElement('button');
+      play.type = 'button';
+      play.className = 'btn btn--lg video-play';
+      play.textContent = '▶ Regarder la démo (1 min)';
+      demo.parentNode.appendChild(play);
+      var setLabel = function (text) { play.textContent = text; };
+      play.addEventListener('click', function () {
+        if (play.disabled) return;
+        play.disabled = true;
+        setLabel('Chargement… 0 %');
+        fetch(demoUrl).then(function (res) {
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          var total = Number(res.headers.get('content-length')) || 0;
+          if (!res.body || !res.body.getReader || !total) return res.blob();
+          var reader = res.body.getReader(), chunks = [], got = 0;
+          var pump = function () {
+            return reader.read().then(function (r) {
+              if (r.done) return new Blob(chunks, { type: 'video/mp4' });
+              chunks.push(r.value);
+              got += r.value.length;
+              setLabel('Chargement… ' + Math.min(99, Math.round(got * 100 / total)) + ' %');
+              return pump();
+            });
+          };
+          return pump();
+        }).then(function (blob) {
+          demo.src = URL.createObjectURL(blob);
+          demo.controls = true;
+          play.parentNode.removeChild(play);
+          var p = demo.play();
+          if (p && p.catch) p.catch(function () {});
+        }).catch(function () {
+          play.disabled = false;
+          setLabel('Réessayer de charger la vidéo');
+        });
+      });
+    }
+  }
+
   // ---- Hero loop: respect reduced motion, and only play while visible ----
   var video = document.querySelector('.hero__video');
   if (video) {

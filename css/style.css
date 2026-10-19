@@ -209,10 +209,12 @@ p { margin: 0 0 12px; }
 }
 
 /* demo */
-.win--video video { width: 100%; aspect-ratio: 16 / 9; background: #06070f; }
-.transcript { margin-top: 20px; color: var(--dim); }
-.transcript summary { cursor: pointer; font-weight: 600; color: var(--ink); }
-.transcript ol { margin: 14px 0 0; padding-left: 20px; display: grid; gap: 8px; }
+.win--video { position: relative; }
+.win--video video { display: block; width: 100%; aspect-ratio: 16 / 9; background: #06070f; }
+.video-play { position: absolute; left: 50%; bottom: 10%; transform: translateX(-50%); }
+.video-play:hover { transform: translate(-50%, -2px); }
+.video-play:active { transform: translate(-50%, 1px); }
+.video-play[disabled] { cursor: progress; filter: none; }
 
 /* features */
 .win--shot > a > img, .win--shot > img { width: 100%; }
@@ -251,7 +253,6 @@ p { margin: 0 0 12px; }
 /* pricing */
 #prix .wrap > .sign, #prix .wrap > .h2 { display: table; margin-left: auto; margin-right: auto; text-align: center; }
 #prix .wrap > .h2 { margin-bottom: 36px; }
-.zoom { display: block; cursor: zoom-in; }
 .pricing { display: flex; justify-content: center; }
 .price-card {
   position: relative; width: 100%; max-width: 560px; padding: 30px 24px 24px;
@@ -321,4 +322,7 @@ p { margin: 0 0 12px; }
   .float, .parade, .parade img { animation: none; }
   .parade { left: 50%; transform: translateX(-50%); gap: 24px; }
   .btn { transition: none; }
+}
+@media (max-width: 600px) {
+  .video-play { bottom: 7%; min-height: 38px; padding: 7px 12px; font-size: 13px; white-space: nowrap; }
 }
