@@ -4,14 +4,14 @@ Site statique, sans étape de build : ouvre `index.html` directement, ou mets-le
 hébergeur statique (Netlify, GitHub Pages, Cloudflare Pages…).
 
 PixelQG est gratuit et open source (licence MIT) : le site n'a aucun paiement. Les boutons
-« Télécharger gratuitement » mènent à https://github.com/hugobertagna/pixelqg-app/releases/latest
-(installeur `PixelQG-Setup-*.exe`) et « Voir le code sur GitHub » à https://github.com/hugobertagna/pixelqg-app.
+« Télécharger » téléchargent directement l'installeur (`DOWNLOAD_URL` dans `config.js`) et
+« Voir le code sur GitHub » mène à https://github.com/hugobertagna/pixelqg-app.
 
 ## À faire avant la mise en ligne
 
 1. **Dépôts GitHub** : publie `pixelqg-app` (avec une version qui contient l'installeur), sinon les liens mènent à une page 404.
 2. **Contact** : `config.js` ne contient que `CONTACT_EMAIL`. Le site n'a ni inscription ni base de données : la communauté vit sur GitHub (issues, pull requests, Discussions).
-3. **Pages légales** : complète les champs `[entre crochets]` de `legal/mentions-legales.html`.
+3. **Nouvelle version** : mets à jour `DOWNLOAD_URL` dans `config.js` et les liens `data-download` des pages.
 4. **Réseaux sociaux** : une fois le site en ligne, remplace `images/og-image.jpg` par l'adresse complète dans la balise `og:image` de `index.html`.
 
 ## Mettre en ligne

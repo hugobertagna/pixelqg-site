@@ -20,9 +20,13 @@
 <script src="office.js"></script>
 <script src="scenes.js"></script>
 <script src="social.js"></script>
+<!-- installation tutorial: capture data (written by tuto/capture-*.js; app-shots.js only after a real app capture) -->
+<script src="tuto/shots/site-shot.js"></script>
+<script src="tuto/shots/app-shots.js" onerror="this.remove()"></script>
+<script src="tuto.js"></script>
 <script>
   // ?mode=main (65 s explainer, 1920x1080), ?mode=loop (8 s hero loop, 1200x750)
-  // or ?mode=social-a|social-b|social-c (vertical clips, 1080x1920).
+  // ?mode=social-a|social-b|social-c (vertical clips, 1080x1920) or ?mode=tuto (installation tutorial, 1920x1080).
   // The renderer calls window.renderFrame(i) then captures the page; nothing here depends on wall-clock time.
   const params = new URLSearchParams(location.search);
   const MODE = params.get('mode') || 'main';
@@ -35,12 +39,13 @@
   const clip = SOCIAL ? Social.CLIPS[SOCIAL[1]] : null;
   window.VIDEO = {
     mode: MODE, fps: FPS, width: canvas.width, height: canvas.height,
-    duration: clip ? clip.duration : MODE === 'loop' ? Story.LOOP_DURATION : Story.DURATION,
+    duration: clip ? clip.duration : MODE === 'loop' ? Story.LOOP_DURATION : MODE === 'tuto' ? Tuto.DURATION : Story.DURATION,
     ...(clip ? { name: clip.name, posterAt: clip.posterAt, grooveAt: clip.grooveAt } : {}),
+    ...(MODE === 'tuto' ? { posterAt: Tuto.POSTER_AT } : {}),
   };
-  window.renderAt = (t) => (clip ? Social.render(ctx, SOCIAL[1], t) : MODE === 'loop' ? Story.renderLoop(ctx, t) : Story.renderMain(ctx, t));
+  window.renderAt = (t) => (clip ? Social.render(ctx, SOCIAL[1], t) : MODE === 'loop' ? Story.renderLoop(ctx, t) : MODE === 'tuto' ? Tuto.render(ctx, t) : Story.renderMain(ctx, t));
   window.renderFrame = (i) => { window.renderAt(i / FPS); return true; };
-  window.ready = Story.loadImages().then(() => { window.renderAt(0); return window.VIDEO; });
+  window.ready = Promise.all([Story.loadImages(), MODE === 'tuto' ? Tuto.loadImages() : null]).then(() => { window.renderAt(0); return window.VIDEO; });
 
   if (params.has('preview')) {
     document.body.classList.add('preview');
